@@ -338,10 +338,10 @@ reward:
   enable: true
   QR_code:
     - itemlist:
-        img: https://img-blog.csdnimg.cn/20190618195511422.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1YW5kZXFpbjIwODM=,size_16,color_FFFFFF,t_70
+        img: https://img-blog.csdnimg.cn/20190622160540898.png
         text: 微信
     - itemlist:
-        img: https://img-blog.csdnimg.cn/201906181955442.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1YW5kZXFpbjIwODM=,size_16,color_FFFFFF,t_70
+        img: https://img-blog.csdnimg.cn/20190622160536720.jpg
         text: 支付寶
 
 related_post:
