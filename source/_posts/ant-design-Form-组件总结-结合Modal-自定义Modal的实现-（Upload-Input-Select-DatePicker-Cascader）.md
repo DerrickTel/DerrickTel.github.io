@@ -11,7 +11,7 @@ category: [Ant-Design, JavaScript]
 
 最近在项目中发现要写多个弹框（用于查看、编辑、新建XX信息），如下图。
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20190428165405459.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1YW5kZXFpbjIwODM=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](http://i2.tiimg.com/691643/878bc6c1e3bc2913.png)
 
 像这样花里胡哨的弹框在一个大型的中台管理系统中，可能要写上好几遍的Modal
 但是其实他们大同小异。

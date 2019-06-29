@@ -28,7 +28,7 @@ category: [Java, Spring-Boot]
 
 ## 服务端未允许跨域
 
-![服务端未允许跨域](https://img-blog.csdnimg.cn/20190311105909443.png)
+![服务端未允许跨域](http://i2.tiimg.com/691643/ac5cfe3b8bd7be4c.png)
 
 ## 如何解决
 
@@ -79,6 +79,6 @@ config.addAllowedOrigin("*"); // 允许任何域名使用（*可以换成特定�
 
 
 ## 结果
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20190311110721789.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1YW5kZXFpbjIwODM=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](http://i2.tiimg.com/691643/ebf3d78754466b2c.png)
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20190311110735834.png)
+![在这里插入图片描述](http://i2.tiimg.com/691643/f9ca285536bad55e.png)

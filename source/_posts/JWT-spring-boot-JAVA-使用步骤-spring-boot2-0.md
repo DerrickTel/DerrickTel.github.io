@@ -125,4 +125,4 @@ JWT 的三个部分依次如下。
 写成一行，就是下面的样子。
 
 
-![https://www.wangbase.com/blogimg/asset/201807/bg2018072303.jpg](https://img-blog.csdnimg.cn/20190325103836546.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1YW5kZXFpbjIwODM=,size_16,color_FFFFFF,t_70)
+![https://www.wangbase.com/blogimg/asset/201807/bg2018072303.jpg](http://i2.tiimg.com/691643/8931d94366be2774.png)

@@ -338,11 +338,11 @@ reward:
   enable: true
   QR_code:
     - itemlist:
-        img: https://img-blog.csdnimg.cn/20190622160540898.png
-        text: 微信
+        img: http://i2.tiimg.com/691643/5c227dc4006fd357.png
+        # text: 微信
     - itemlist:
-        img: https://img-blog.csdnimg.cn/20190622160536720.jpg
-        text: 支付寶
+        img: http://i1.fuimg.com/691643/5278d1de0e5d39fc.jpg
+        # text: 支付寶
 
 related_post:
   enable: true

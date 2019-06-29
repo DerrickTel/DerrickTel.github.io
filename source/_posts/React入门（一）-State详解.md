@@ -21,7 +21,7 @@ category: [React]
  - 解压-打开
   - npm install
   - npm start 
-  - ![如果有询问](https://img-blog.csdnimg.cn/20181123111537542.png)
+  - ![如果有询问](http://i2.tiimg.com/691643/b41e573850b474a3.png)
   - y（3000端口任务在运行是否愿意运行在别的端口上？）
 
 
@@ -69,7 +69,7 @@ Ctrl + C
 Ctrl + V
 
 ## 二、State是什么？
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20181123134126335.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1YW5kZXFpbjIwODM=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](http://i2.tiimg.com/691643/fa5b342683cef063.png)
 
 英文翻译是状态。
 
@@ -264,7 +264,7 @@ export default App;
 看log
 然后按钮
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20181123143905811.png)
+![在这里插入图片描述](http://i2.tiimg.com/691643/52f1dcf23ee2a658.png)
 
 诶，我不是setState了吗，为什么值没有改变还是初值呢？
 

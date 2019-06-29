@@ -15,5 +15,5 @@ category: [Web前端]
 
 https://github.com/stephentian/33-js-concepts
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20190328205449472.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1YW5kZXFpbjIwODM=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](http://i2.tiimg.com/691643/06be22da117ef945.png)
 
