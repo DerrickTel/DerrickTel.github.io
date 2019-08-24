@@ -3,6 +3,7 @@ title: JavaScript 浅拷贝 深拷贝 赋值 引用 JS
 date: 2019-06-19 10:10:59
 tags: [深拷贝, 浅拷贝]
 category: [JavaScript]
+cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/JavaScript.png?raw=true
 ---
 
 ## 前言

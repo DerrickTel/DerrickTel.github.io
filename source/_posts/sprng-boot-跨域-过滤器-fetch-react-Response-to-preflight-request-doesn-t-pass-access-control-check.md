@@ -5,6 +5,7 @@ title: >-
 date: 2019-06-19 11:20:11
 tags: [Spring-Boot, 跨域, Java]
 category: [Java, Spring-Boot]
+cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/springboot.png?raw=true
 ---
 
 ## 前言

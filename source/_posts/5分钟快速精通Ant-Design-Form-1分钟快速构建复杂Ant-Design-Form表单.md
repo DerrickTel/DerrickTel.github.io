@@ -3,7 +3,7 @@ title: 5分钟快速精通Ant Design Form 1分钟快速构建复杂Ant Design Fo
 date: 2019-07-28 20:05:56
 tags: [Ant-Design-Form, Ant-Design]
 category: [Ant-Design]
-cover: 
+cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/ANTD.png?raw=true
 ---
 ## Ant Design Form
 Antd 表单的核心无非是以下两点

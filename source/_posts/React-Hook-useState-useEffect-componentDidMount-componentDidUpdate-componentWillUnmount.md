@@ -5,6 +5,7 @@ title: >-
 date: 2019-07-30 21:00:00
 tags: [ReactHook, React]
 category: [React]
+cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/React.jpeg?raw=true
 ---
 ## 介绍
 Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。

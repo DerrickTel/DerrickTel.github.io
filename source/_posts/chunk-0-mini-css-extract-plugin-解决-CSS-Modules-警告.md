@@ -3,6 +3,7 @@ title: 'chunk 0 [mini-css-extract-plugin] 解决 CSS Modules 警告'
 date: 2019-06-29 10:38:06
 tags: [CSS-Module]
 category: [CSS]
+cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/css.png?raw=true
 ---
 
 ## 前言

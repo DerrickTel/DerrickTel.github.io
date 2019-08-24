@@ -3,6 +3,7 @@ title: React Hook 倒计时
 date: 2019-07-30 21:01:24
 tags: [ReactHook, React, 倒计时]
 category: [React]
+cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/React.jpeg?raw=true
 ---
 
 ```

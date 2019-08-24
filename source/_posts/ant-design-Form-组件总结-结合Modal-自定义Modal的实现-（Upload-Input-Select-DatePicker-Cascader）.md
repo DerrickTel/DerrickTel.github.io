@@ -5,6 +5,7 @@ title: >-
 date: 2019-06-19 10:24:07
 tags: [Ant-Design-Form, Ant-Design组件合集]
 category: [Ant-Design, JavaScript]
+cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/ANTD.png?raw=true
 ---
 
 ## 起源

@@ -3,6 +3,7 @@ title: ant design pro 2.0 新页面探索 umi 页面404 react
 date: 2019-06-19 11:16:30
 tags: [React-Router, UMI, Ant-Design-Pro]
 category: [Ant-Design-Pro]
+cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/antdP.png?raw=true
 ---
 
 ## 前言

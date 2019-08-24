@@ -3,6 +3,7 @@ title: JWT spring boot JAVA 使用步骤 spring boot2.0
 date: 2019-06-19 10:58:33
 tags: [Spring-Boot-2.0, Java, JWT]
 category: [Java, Spring-Boot]
+cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/JWT.png?raw=true
 ---
 
 ## 前言
