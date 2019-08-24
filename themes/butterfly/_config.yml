@@ -338,10 +338,10 @@ reward:
   enable: true
   QR_code:
     - itemlist:
-        img: http://i2.tiimg.com/691643/5c227dc4006fd357.png
+        img: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/mm_facetoface_collect_qrcode_1560821659959.png?raw=true
         # text: 微信
     - itemlist:
-        img: http://i1.fuimg.com/691643/5278d1de0e5d39fc.jpg
+        img: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/1560821628601.jpg?raw=true
         # text: 支付寶
 
 related_post:
