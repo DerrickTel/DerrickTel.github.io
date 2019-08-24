@@ -3,6 +3,7 @@ title: window.history.back(); 缓存 返回上级页面不刷新数据
 date: 2019-06-19 11:12:34
 tags: [HTML, JavaScript]
 category: [Web前端]
+cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/history.jpeg?raw=true
 ---
 
 ## 问题
