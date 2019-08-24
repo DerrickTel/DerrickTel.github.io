@@ -30,13 +30,13 @@
 </ol>
 </li>
 </ol>
-<p><img src="http://i1.fuimg.com/691643/32ba8273642f8421.png" alt="在这里插入图片描述"></p>
+<p><img src="https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/JavaScript%20%E6%B5%85%E6%8B%B7%E8%B4%9D%20%E6%B7%B1%E6%8B%B7%E8%B4%9D%20%E8%B5%8B%E5%80%BC%20%E5%BC%95%E7%94%A8%20JS/20190428204522836.png?raw=true" alt="在这里插入图片描述"></p>
 <p>基本类型的是放在栈区的，访问的时候也是按值访问，就是正常的理解的赋值。</p>
 <ul>
 <li><strong>引用类型和浅拷贝</strong></li>
 </ul>
 <p>引用类型，顾名思义就是引用来访问的。</p>
-<p><img src="http://i1.fuimg.com/691643/c452b97e3865e1d5.png" alt="在这里插入图片描述"></p>
+<p><img src="https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/JavaScript%20%E6%B5%85%E6%8B%B7%E8%B4%9D%20%E6%B7%B1%E6%8B%B7%E8%B4%9D%20%E8%B5%8B%E5%80%BC%20%E5%BC%95%E7%94%A8%20JS/20190428204904611.png?raw=true" alt="在这里插入图片描述"></p>
 <p>在这个例子中，我们操作的是<strong>q</strong>。为什么<strong>w</strong>也改变了呢？</p>
 <p>因为<strong>w</strong>不是真的给他赋值了[1, 2]。</p>
 <p>而是赋值给了<strong>q</strong>所指向的地址的指针。</p>
@@ -44,10 +44,10 @@
 <p>w = q ，只是把 q 指向 地址 A 的这个指针赋值给了 w 。</p>
 <p>w 和 q 都可以操作这个地址的内容。</p>
 <p>所以，当我们用 q 来操作这个地址内容的时候，地址内容就变了。当 w 去取值的时候，内容已经变了。</p>
-<p><img src="http://i1.fuimg.com/691643/4be7463e640451b5.png" alt="在这里插入图片描述"></p>
+<p><img src="https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/JavaScript%20%E6%B5%85%E6%8B%B7%E8%B4%9D%20%E6%B7%B1%E6%8B%B7%E8%B4%9D%20%E8%B5%8B%E5%80%BC%20%E5%BC%95%E7%94%A8%20JS/20190428205243797.png?raw=true" alt="在这里插入图片描述"></p>
 <p>w 和 q 都可以操作这个地址内容。</p>
 <p>那么引用类型有那些呢？</p>
-<p><img src="http://i2.tiimg.com/691643/be17d0efc32741c3.png" alt="在这里插入图片描述"></p>
+<p><img src="https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/JavaScript%20%E6%B5%85%E6%8B%B7%E8%B4%9D%20%E6%B7%B1%E6%8B%B7%E8%B4%9D%20%E8%B5%8B%E5%80%BC%20%E5%BC%95%E7%94%A8%20JS/20190428205350562.png?raw=true" alt="在这里插入图片描述"></p>
 <p>这样简单的引用赋值也叫做浅拷贝。</p>
 <p>可能会带来一些问题，比如:</p>
 <p>A和B都是数组；</p>
@@ -57,7 +57,7 @@
 <p>在react中也有对state浅拷贝判断的（PureComponent）</p>
 <ul>
 <li><p><strong>深拷贝</strong></p>
-<p><img src="http://i2.tiimg.com/691643/7eada1d9747ba440.png" alt="在这里插入图片描述"></p>
+<p><img src="https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/JavaScript%20%E6%B5%85%E6%8B%B7%E8%B4%9D%20%E6%B7%B1%E6%8B%B7%E8%B4%9D%20%E8%B5%8B%E5%80%BC%20%E5%BC%95%E7%94%A8%20JS/20190428205853748.png?raw=true" alt="在这里插入图片描述"></p>
 </li>
 </ul>
 <p>这个就叫做深拷贝。</p>
