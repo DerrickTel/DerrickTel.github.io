@@ -21,7 +21,7 @@ category: [React]
  - 解压-打开
   - npm install
   - npm start 
-  - ![如果有询问](http://i2.tiimg.com/691643/b41e573850b474a3.png)
+  - ![如果有询问](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/React%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89%20State%E8%AF%A6%E8%A7%A3/20181123111537542.png?raw=true)
   - y（3000端口任务在运行是否愿意运行在别的端口上？）
 
 

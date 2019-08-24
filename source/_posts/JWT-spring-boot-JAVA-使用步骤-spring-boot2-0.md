@@ -125,4 +125,4 @@ JWT 的三个部分依次如下。
 写成一行，就是下面的样子。
 
 
-![https://www.wangbase.com/blogimg/asset/201807/bg2018072303.jpg](http://i2.tiimg.com/691643/8931d94366be2774.png)
+![https://www.wangbase.com/blogimg/asset/201807/bg2018072303.jpg](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/JWT%20spring%20boot%20JAVA%20%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4%20spring%20boot2.0/20190325103836546.png?raw=true)

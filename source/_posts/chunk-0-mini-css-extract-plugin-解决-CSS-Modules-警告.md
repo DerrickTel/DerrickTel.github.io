@@ -6,7 +6,7 @@ category: [CSS]
 ---
 
 ## 前言
-前两周，用公司的CI部署的时候，发现![](D:\DerrickGit\01Blog\img\chunk 0 [mini-css-extract-plugin] 解决 CSS Modules 警告\aHR0cDovL2kyLnRpaW1nLmNvbS82OTE2NDMvMmVmODNhMzcxNjA4OWEwZS5wbmc.jpeg)
+前两周，用公司的CI部署的时候，发现![](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/chunk%200%20%5Bmini-css-extract-plugin%5D%20%E8%A7%A3%E5%86%B3%20CSS%20Modules%20%E8%AD%A6%E5%91%8A/aHR0cDovL2kyLnRpaW1nLmNvbS82OTE2NDMvMmVmODNhMzcxNjA4OWEwZS5wbmc.jpeg?raw=true)
 很鲜明的ERR！
 其实这个这个只是一个warning。但是由于环境变量（process.env.ci === true）。所以这个warning被转化成了error，导致了编译失败。一般的CI服务器会自动将这个这设置为true。
 
@@ -28,7 +28,7 @@ category: [CSS]
 `less，sass，less-loader，node-sass，postcss-px2rem` 等等。我几乎吧package.json里面的东西都试了一遍，不管是最新的，或者是我查询的过程中有提到了，我升级或者降级为固定版本。
 无果！
 
-![一个issue](http://i1.fuimg.com/691643/0c8d8b66e0cfe647.png)
+![一个issue](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/chunk%200%20%5Bmini-css-extract-plugin%5D%20%E8%A7%A3%E5%86%B3%20CSS%20Modules%20%E8%AD%A6%E5%91%8A/aHR0cDovL2kxLmZ1aW1nLmNvbS82OTE2NDMvMGM4ZDhiNjZlMGNmZTY0Ny5wbmc.jpeg?raw=true)
 
 他的大致意思是，CSS更加关注加载顺序，OK
 我把我的项目所有的CSS加载顺序改成了一致（其实根本没有加载两个以上CSS的地方，我只是把他们都放到最后一行import）
@@ -42,7 +42,7 @@ category: [CSS]
 
 我想到了我几乎所有的页面都是几乎一个我自己写的组件`<PageContainer>`
 
-![PageContainer](http://i1.fuimg.com/691643/eb0c0f8564148fc0.png)
+![PageContainer](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/chunk%200%20%5Bmini-css-extract-plugin%5D%20%E8%A7%A3%E5%86%B3%20CSS%20Modules%20%E8%AD%A6%E5%91%8A/aHR0cDovL2kxLmZ1aW1nLmNvbS82OTE2NDMvZWIwYzBmODU2NDE0OGZjMC5wbmc.jpeg?raw=true)
 
 在这里我用到了Ant Design Mobile的组件。
 我尝试把这里的组件全部删除。然后在本地build。
@@ -57,8 +57,10 @@ category: [CSS]
 
 我个人的理解是这样的：因为Ant Design 内部也做了CSS的按需加载。导致我们引用组件的时候，很容易造成CSS引入顺序的不一致。
 
-然后我想出了解决方案，将我所有的组件，或者说子组件，全部封装到孙子组件中。就可以解决了![子组件](http://i1.fuimg.com/691643/8563fc8bae55827c.png)
+然后我想出了解决方案，将我所有的组件，或者说子组件，全部封装到孙子组件中。就可以解决了
+
+![子组件](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/chunk%200%20%5Bmini-css-extract-plugin%5D%20%E8%A7%A3%E5%86%B3%20CSS%20Modules%20%E8%AD%A6%E5%91%8A/aHR0cDovL2kxLmZ1aW1nLmNvbS82OTE2NDMvODU2M2ZjOGJhZTU1ODI3Yy5wbmc.jpeg?raw=true)
 
 最后，预约的看到了
 
-![编译成功](http://i1.fuimg.com/691643/a912b5c8e597a63c.png)
+![编译成功](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/chunk%200%20%5Bmini-css-extract-plugin%5D%20%E8%A7%A3%E5%86%B3%20CSS%20Modules%20%E8%AD%A6%E5%91%8A/aHR0cDovL2kxLmZ1aW1nLmNvbS82OTE2NDMvYTkxMmI1YzhlNTk3YTYzYy5wbmc.jpeg?raw=true)

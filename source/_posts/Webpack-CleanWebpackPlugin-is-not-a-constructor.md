@@ -7,7 +7,8 @@ category: [WebPack]
 
 ## 前言
 今天自己跟着webpack官网的demo一步步走下来。发现了这个问题。
-![在这里插入图片描述](http://i2.tiimg.com/691643/1bc6397d3431ac80.png)
+
+![](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/CleanWebpackPlugin%20is%20not%20a%20constructor/20190622155255789.png?raw=true)
 
 查了一圈。发现了这个博主。nice！
 ```
@@ -53,6 +54,6 @@ plugins: [
 ```
 
  现在的版本不用指定文件路径了，直接调用new CleanWebpackPlugin()
- ![在这里插入图片描述](http://i2.tiimg.com/691643/c12437ed201ea7db.png)
+ ![在这里插入图片描述](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/CleanWebpackPlugin%20is%20not%20a%20constructor/20190622155123842.png?raw=true)
 索引：https://blog.csdn.net/qq_36242361/article/details/90709258
 

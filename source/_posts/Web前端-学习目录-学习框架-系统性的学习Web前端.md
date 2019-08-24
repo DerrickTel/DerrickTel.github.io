@@ -15,5 +15,5 @@ category: [Web前端]
 
 https://github.com/stephentian/33-js-concepts
 
-![在这里插入图片描述](http://i2.tiimg.com/691643/06be22da117ef945.png)
+![在这里插入图片描述](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/Web%E5%89%8D%E7%AB%AF%20%E5%AD%A6%E4%B9%A0%E7%9B%AE%E5%BD%95%20%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E7%9A%84%E5%AD%A6%E4%B9%A0Web%E5%89%8D%E7%AB%AF/20190328205449472.png?raw=true)
 

@@ -26,7 +26,7 @@ category: [JavaScript]
  6. Symbol（ES6新增，表示独一无二的一个值。[MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Symbol)）
 
 
-![在这里插入图片描述](http://i1.fuimg.com/691643/32ba8273642f8421.png)
+![在这里插入图片描述](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/JavaScript%20%E6%B5%85%E6%8B%B7%E8%B4%9D%20%E6%B7%B1%E6%8B%B7%E8%B4%9D%20%E8%B5%8B%E5%80%BC%20%E5%BC%95%E7%94%A8%20JS/20190428204522836.png?raw=true)
 
 基本类型的是放在栈区的，访问的时候也是按值访问，就是正常的理解的赋值。
 
@@ -35,7 +35,7 @@ category: [JavaScript]
 
 引用类型，顾名思义就是引用来访问的。
 
-![在这里插入图片描述](http://i1.fuimg.com/691643/c452b97e3865e1d5.png)
+![在这里插入图片描述](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/JavaScript%20%E6%B5%85%E6%8B%B7%E8%B4%9D%20%E6%B7%B1%E6%8B%B7%E8%B4%9D%20%E8%B5%8B%E5%80%BC%20%E5%BC%95%E7%94%A8%20JS/20190428204904611.png?raw=true)
 
 在这个例子中，我们操作的是**q**。为什么**w**也改变了呢？
 
@@ -52,7 +52,7 @@ w 和 q 都可以操作这个地址的内容。
 所以，当我们用 q 来操作这个地址内容的时候，地址内容就变了。当 w 去取值的时候，内容已经变了。
 
 
-![在这里插入图片描述](http://i1.fuimg.com/691643/4be7463e640451b5.png)
+![在这里插入图片描述](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/JavaScript%20%E6%B5%85%E6%8B%B7%E8%B4%9D%20%E6%B7%B1%E6%8B%B7%E8%B4%9D%20%E8%B5%8B%E5%80%BC%20%E5%BC%95%E7%94%A8%20JS/20190428205243797.png?raw=true)
 
 
 w 和 q 都可以操作这个地址内容。
@@ -61,7 +61,7 @@ w 和 q 都可以操作这个地址内容。
 
 
 
-![在这里插入图片描述](http://i2.tiimg.com/691643/be17d0efc32741c3.png)
+![在这里插入图片描述](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/JavaScript%20%E6%B5%85%E6%8B%B7%E8%B4%9D%20%E6%B7%B1%E6%8B%B7%E8%B4%9D%20%E8%B5%8B%E5%80%BC%20%E5%BC%95%E7%94%A8%20JS/20190428205350562.png?raw=true)
 
 这样简单的引用赋值也叫做浅拷贝。
 
@@ -79,8 +79,8 @@ A和B都是数组；
 
 
  - **深拷贝**
- 
- ![在这里插入图片描述](http://i2.tiimg.com/691643/7eada1d9747ba440.png)
+
+ ![在这里插入图片描述](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/JavaScript%20%E6%B5%85%E6%8B%B7%E8%B4%9D%20%E6%B7%B1%E6%8B%B7%E8%B4%9D%20%E8%B5%8B%E5%80%BC%20%E5%BC%95%E7%94%A8%20JS/20190428205853748.png?raw=true)
 
 这个就叫做深拷贝。
 

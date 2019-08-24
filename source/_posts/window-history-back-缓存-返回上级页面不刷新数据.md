@@ -14,8 +14,8 @@ category: [Web前端]
  - 导致我们的数据还是从前一次里面取的（他的初衷是希望你更快，更省资源）
  - 但是和我们的需求不同
  - 如图：
- 
-![在这里插入图片描述](http://i2.tiimg.com/691643/c1123102f826e726.png)
+
+![在这里插入图片描述](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/window.history.back();%20%E7%BC%93%E5%AD%98%20%E8%BF%94%E5%9B%9E%E4%B8%8A%E7%BA%A7%E9%A1%B5%E9%9D%A2%E4%B8%8D%E5%88%B7%E6%96%B0%E6%95%B0%E6%8D%AE/20190318092239845.png?raw=true)
 
 ## 探索
 从网上找的一些资料：

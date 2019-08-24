@@ -28,7 +28,7 @@ category: [Java, Spring-Boot]
 
 ## 服务端未允许跨域
 
-![服务端未允许跨域](http://i2.tiimg.com/691643/ac5cfe3b8bd7be4c.png)
+![服务端未允许跨域](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/sprng%20boot%20%E8%B7%A8%E5%9F%9F%20%E8%BF%87%E6%BB%A4%E5%99%A8%20fetch%20react%20Response%20to%20preflight%20request%20doesn't%20pass%20access%20control%20check/20190311105909443.png?raw=true)
 
 ## 如何解决
 
@@ -79,6 +79,6 @@ config.addAllowedOrigin("*"); // 允许任何域名使用（*可以换成特定�
 
 
 ## 结果
-![在这里插入图片描述](http://i2.tiimg.com/691643/ebf3d78754466b2c.png)
+![在这里插入图片描述](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/sprng%20boot%20%E8%B7%A8%E5%9F%9F%20%E8%BF%87%E6%BB%A4%E5%99%A8%20fetch%20react%20Response%20to%20preflight%20request%20doesn't%20pass%20access%20control%20check/20190311110721789.png?raw=true)
 
-![在这里插入图片描述](http://i2.tiimg.com/691643/f9ca285536bad55e.png)
+![在这里插入图片描述](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/sprng%20boot%20%E8%B7%A8%E5%9F%9F%20%E8%BF%87%E6%BB%A4%E5%99%A8%20fetch%20react%20Response%20to%20preflight%20request%20doesn't%20pass%20access%20control%20check/20190311110735834.png?raw=true)
