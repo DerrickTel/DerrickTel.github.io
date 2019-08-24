@@ -3,6 +3,7 @@ title: Web前端 学习目录 学习框架 系统性的学习Web前端
 date: 2019-06-19 10:28:50
 tags: [系统性的学习, 学习目录, Web前端, 学习框架]
 category: [Web前端]
+cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/web.jpeg?raw=true
 ---
 
 ## 前言

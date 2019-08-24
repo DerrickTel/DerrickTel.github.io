@@ -3,6 +3,7 @@ title: Webpack CleanWebpackPlugin is not a constructor
 date: 2019-06-22 15:55:56
 tags: [WebPack, clean-webpack-plugin]
 category: [WebPack]
+cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/webpack.png?raw=true
 ---
 
 ## 前言
