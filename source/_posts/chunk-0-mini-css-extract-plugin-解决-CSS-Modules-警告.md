@@ -6,7 +6,7 @@ category: [CSS]
 ---
 
 ## 前言
-前两周，用公司的CI部署的时候，发现![报错信息](http://i2.tiimg.com/691643/2ef83a3716089a0e.png)
+前两周，用公司的CI部署的时候，发现![](D:\DerrickGit\01Blog\img\chunk 0 [mini-css-extract-plugin] 解决 CSS Modules 警告\aHR0cDovL2kyLnRpaW1nLmNvbS82OTE2NDMvMmVmODNhMzcxNjA4OWEwZS5wbmc.jpeg)
 很鲜明的ERR！
 其实这个这个只是一个warning。但是由于环境变量（process.env.ci === true）。所以这个warning被转化成了error，导致了编译失败。一般的CI服务器会自动将这个这设置为true。
 
