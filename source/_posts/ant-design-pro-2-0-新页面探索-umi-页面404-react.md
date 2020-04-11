@@ -14,7 +14,7 @@ cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/
 
 ## 开始
 
-![在这里插入图片描述](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/ant%20design%20pro%202.0%20%E6%96%B0%E9%A1%B5%E9%9D%A2%E6%8E%A2%E7%B4%A2%20umi%20%E9%A1%B5%E9%9D%A2404%20react/20190312150742764.png?raw=true)
+![在这里插入图片描述]()
 
 这个是官方的介绍。根据提示我开始加入我的路由
 

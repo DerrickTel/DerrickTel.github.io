@@ -412,4 +412,7 @@ translate:
   msgToTraditionalChinese: "繁"
   #當文字是繁體時，按鈕顯示的文字
   msgToSimplifiedChinese: "简"
+
+
+post_asset_folder: true
   
