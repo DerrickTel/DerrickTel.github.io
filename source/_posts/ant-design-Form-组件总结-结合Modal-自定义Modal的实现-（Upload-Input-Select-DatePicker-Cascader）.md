@@ -5,14 +5,14 @@ title: >-
 date: 2019-06-19 10:24:07
 tags: [Ant-Design-Form, Ant-Design组件合集]
 category: [Ant-Design, JavaScript]
-cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/ANTD.png?raw=true
+cover: /image/cover/ANTD.png
 ---
 
 ## 起源
 
 最近在项目中发现要写多个弹框（用于查看、编辑、新建XX信息），如下图。
 
-![在这里插入图片描述](/images/ant-design-Form组件总结结合Modal自定义Modal的实现)
+![测试图片](/image/AntDesignForm总结/modal.png)
 
 像这样花里胡哨的弹框在一个大型的中台管理系统中，可能要写上好几遍的Modal
 但是其实他们大同小异。

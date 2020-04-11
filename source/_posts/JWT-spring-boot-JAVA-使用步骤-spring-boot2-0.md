@@ -3,7 +3,7 @@ title: JWT spring boot JAVA 使用步骤 spring boot2.0
 date: 2019-06-19 10:58:33
 tags: [Spring-Boot-2.0, Java, JWT]
 category: [Java, Spring-Boot]
-cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/JWT.png?raw=true
+cover: /image/cover/JWT.png
 ---
 
 ## 前言
@@ -126,4 +126,4 @@ JWT 的三个部分依次如下。
 写成一行，就是下面的样子。
 
 
-![https://www.wangbase.com/blogimg/asset/201807/bg2018072303.jpg](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/JWT%20spring%20boot%20JAVA%20%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4%20spring%20boot2.0/20190325103836546.png?raw=true)
+![https://www.wangbase.com/blogimg/asset/201807/bg2018072303.jpg](/image/SpringBootJWT/20190325103836546.png)

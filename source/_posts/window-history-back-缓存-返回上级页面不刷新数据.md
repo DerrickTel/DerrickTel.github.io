@@ -3,7 +3,7 @@ title: window.history.back(); 缓存 返回上级页面不刷新数据
 date: 2019-06-19 11:12:34
 tags: [HTML, JavaScript]
 category: [Web前端]
-cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/history.jpeg?raw=true
+cover: /image/cover/history.jpeg
 ---
 
 ## 问题
@@ -16,7 +16,7 @@ cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/
  - 但是和我们的需求不同
  - 如图：
 
-![在这里插入图片描述](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/window.history.back();%20%E7%BC%93%E5%AD%98%20%E8%BF%94%E5%9B%9E%E4%B8%8A%E7%BA%A7%E9%A1%B5%E9%9D%A2%E4%B8%8D%E5%88%B7%E6%96%B0%E6%95%B0%E6%8D%AE/20190318092239845.png?raw=true)
+![在这里插入图片描述](/image/historyBack函数/20190318092239845.png)
 
 ## 探索
 从网上找的一些资料：

@@ -5,7 +5,7 @@ title: >-
 date: 2019-07-30 21:00:00
 tags: [ReactHook, React]
 category: [React]
-cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/React.jpeg?raw=true
+cover: /image/cover/React.jpeg
 ---
 ## 介绍
 Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。
@@ -218,8 +218,3 @@ useEffect(() => {
 > React 何时清除 effect？ React 会在组件卸载的时候执行清除操作。正如之前学到的，effect 在每次渲染的时候都会执行。这就是为什么 React 会在执行当前 effect 之前对上一个 effect 进行清除。
 
 这些都是官网的原话.  代码中的return 就是清除..同样的,在第二个值放入一个空.这样就会很优雅的清除了. 最明显就是短信倒计时的`setInerval`, clear一下才不会一直占用资源
-
->本人自创自用 一个好用的AntDesign Form快速生成器
->https://github.com/DerrickTel/ant-design-form
->欢迎大家提意见,本人会不定期更新.有新的需求都可以给我提issue  
->能动动你的小手点个赞就更棒啦~

@@ -3,7 +3,7 @@ title: React入门（一） State详解
 date: 2019-06-19 11:22:03
 tags: [React, State]
 category: [React]
-cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/React.jpeg?raw=true
+cover: /image/cover/React.jpeg
 ---
 
 @[TOC](React入门（一） State详解)
@@ -22,7 +22,7 @@ cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/
  - 解压-打开
   - npm install
   - npm start 
-  - ![如果有询问](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/React%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89%20State%E8%AF%A6%E8%A7%A3/20181123111537542.png?raw=true)
+  - ![如果有询问](/image/React入门/20181123111537542.png)
   - y（3000端口任务在运行是否愿意运行在别的端口上？）
 
 
@@ -70,7 +70,7 @@ Ctrl + C
 Ctrl + V
 
 ## 二、State是什么？
-![在这里插入图片描述](http://i2.tiimg.com/691643/fa5b342683cef063.png)
+![在这里插入图片描述](/image/React入门/20181123134126335.png)
 
 英文翻译是状态。
 
@@ -265,7 +265,7 @@ export default App;
 看log
 然后按钮
 
-![在这里插入图片描述](http://i2.tiimg.com/691643/52f1dcf23ee2a658.png)
+![在这里插入图片描述](/image/React入门/20181123143905811.png)
 
 诶，我不是setState了吗，为什么值没有改变还是初值呢？
 

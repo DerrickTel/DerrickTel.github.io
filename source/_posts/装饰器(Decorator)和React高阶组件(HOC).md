@@ -3,7 +3,7 @@ title: 装饰器(Decorator)和React高阶组件(HOC)
 date: 2019-09-15 21:59:48
 tags: [React, ES6]
 category: [ES6]
-cover: https://github.com//DerrickTel/DerrickTel.github.io/blob/master/img/%E8%A3%85%E9%A5%B0%E5%99%A8(Decorator)%E5%92%8CReact%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6(HOC)/decorator.png?raw=true
+cover: /image/cover/decorator.png
 ---
 ## 什么是装饰器(Decorator)
 装饰器（Decorator）是一种`与类（class）相关`的语法，用来注释或修改类和类方法。

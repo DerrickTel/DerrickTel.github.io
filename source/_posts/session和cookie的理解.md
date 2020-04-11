@@ -3,7 +3,7 @@ title: session和cookie的理解
 date: 2020-04-11 10:31:35
 tags: [HTTP]
 categories: [HTTP]
-cover: /images/http.png
+cover: /image/cover/http.png
 
 ---
 

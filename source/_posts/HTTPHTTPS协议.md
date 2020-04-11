@@ -3,7 +3,7 @@ title: HTTPH/TTPS协议
 date: 2019-08-24 19:02:25
 tags: [HTTP]
 categories: [HTTP]
-cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/HTTP%20HTTP%20%E5%8D%8F%E8%AE%AE%20URI/%E4%B8%8B%E8%BD%BD.png?raw=true
+cover: /image/cover/http.png
 ---
 
 ## 协议
@@ -71,7 +71,7 @@ URL（Uniform Resource Locator）是统一资源定位符的简称，有时候�
 | query-string | 发给 http 服务器的数据                                       |
 | anchor       | 锚                                                           |
 
-![在这里插入图片描述](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/HTTP%20HTTP%20%E5%8D%8F%E8%AE%AE%20URI/15fc2525666dc96e.jpeg?raw=true)
+![在这里插入图片描述](/image/httpHttps/15fc2525666dc96e.jpg)
 
 ## HTTP请求
 ### 类型

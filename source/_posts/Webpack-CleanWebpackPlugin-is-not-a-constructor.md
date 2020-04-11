@@ -3,13 +3,13 @@ title: Webpack CleanWebpackPlugin is not a constructor
 date: 2019-06-22 15:55:56
 tags: [WebPack, clean-webpack-plugin]
 category: [WebPack]
-cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/webpack.png?raw=true
+cover: /image/cover/webpack.png
 ---
 
 ## 前言
 今天自己跟着webpack官网的demo一步步走下来。发现了这个问题。
 
-![](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/CleanWebpackPlugin%20is%20not%20a%20constructor/20190622155255789.png?raw=true)
+![](/image/WebpackCleanWebpackPlugin/20190622155255789.png)
 
 查了一圈。发现了这个博主。nice！
 ```
@@ -55,6 +55,6 @@ plugins: [
 ```
 
  现在的版本不用指定文件路径了，直接调用new CleanWebpackPlugin()
- ![在这里插入图片描述](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/CleanWebpackPlugin%20is%20not%20a%20constructor/20190622155123842.png?raw=true)
+ ![在这里插入图片描述](/image/WebpackCleanWebpackPlugin/20190622155123842.png)
 索引：https://blog.csdn.net/qq_36242361/article/details/90709258
 
