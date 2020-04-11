@@ -12,7 +12,7 @@ cover: https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/cover/
 
 最近在项目中发现要写多个弹框（用于查看、编辑、新建XX信息），如下图。
 
-![在这里插入图片描述](https://github.com/DerrickTel/DerrickTel.github.io/blob/master/img/ant%20design%20Form%20%E7%BB%84%E4%BB%B6%E6%80%BB%E7%BB%93%20%E7%BB%93%E5%90%88Modal%20%E8%87%AA%E5%AE%9A%E4%B9%89Modal%E7%9A%84%E5%AE%9E%E7%8E%B0%20%EF%BC%88Upload%20Input%20Select%20DatePicker%20Cascader%EF%BC%89/20190428165405459.png?raw=true)
+![在这里插入图片描述](/images/ant-design-Form组件总结结合Modal自定义Modal的实现)
 
 像这样花里胡哨的弹框在一个大型的中台管理系统中，可能要写上好几遍的Modal
 但是其实他们大同小异。
