@@ -758,7 +758,7 @@ export default Counter
 
 
 
-## useMomo/useCallack/memo
+## memo
 
 #### memo没有回调函数的话是怎么浅比较的？
 
