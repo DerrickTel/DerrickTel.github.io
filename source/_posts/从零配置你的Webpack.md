@@ -373,7 +373,8 @@ npm install --save-dev webpack-merge
 在【webpack.prod.config.js】加入
 
 ```js
-const merge = require('webpack-merge');
+const merge = require('webpack-merge'); // 版本为4.x
+// webpack-merge 5.x版本应该改为 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.config.js');
 
 module.exports = merge(common, {
@@ -455,7 +456,8 @@ npm install --save-dev html-webpack-plugin
 修改【webpack.prod.config.js】
 
 ```js
-const merge = require('webpack-merge');
+const merge = require('webpack-merge'); // 版本为4.x
+// webpack-merge 5.x版本应该改为 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.config.js');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -509,7 +511,8 @@ npm install --save-dev clean-webpack-plugin
 修改【webpck.prod.config.js】
 
 ```diff
-const merge = require('webpack-merge');
+const merge = require('webpack-merge'); // 版本为4.x
+// webpack-merge 5.x版本应该改为 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.config.js');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -570,7 +573,8 @@ npm install webpack-dev-server --save-dev
 
 ```js
 const path = require('path');
-const merge = require('webpack-merge');
+const merge = require('webpack-merge'); // 版本为4.x
+// webpack-merge 5.x版本应该改为 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.config.js');
 
 const webpack = require('webpack');
@@ -912,7 +916,8 @@ entry: {
 修改【webpack.prod.config.js】
 
 ```js
-const merge = require('webpack-merge');
+const merge = require('webpack-merge'); // 版本为4.x
+// webpack-merge 5.x版本应该改为 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.config.js');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
