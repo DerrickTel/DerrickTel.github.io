@@ -52,9 +52,9 @@ copy:
 #   icon: link || the description
 # ---------------
 social:
-  fa fa-github: https://github.com/jerryc127 || Github
-  fa fa-envelope: mailto:xxxxxxx@gmail.com || Email
-  fa fa-rss: /atom.xml || RSS
+  fa fa-github: https://github.com/derricktel || Github
+  fa fa-envelope: derricktel@foxmail.com || Email
+  # fa fa-rss: /atom.xml || RSS
 
 ####    search    ####
 # Algolia search
