@@ -6,6 +6,21 @@ category: [重拾前端]
 cover: /image/cover/web.jpeg
 ---
 
+
+最近在写【重拾前端】系列，下面有几个快速通道，大家自取
+
+[【重识前端】原型/原型链和继承](https://juejin.im/post/6850418113944420359)
+
+[【重识前端】闭包与模块](https://juejin.im/post/6850418117508759566)
+
+[【重识前端】全面攻破this](https://juejin.im/post/6854573215658803208)
+
+[【重识前端】一次搞定JavaScript的执行机制](https://juejin.im/post/6859911609633767438)
+
+[【重识前端】什么是BFC、IFC、GFC 和 FFC](https://juejin.im/post/6860375101322461198)
+
+[【重识前端】深入内存世界](https://juejin.im/post/6865204092877144077)
+
 ## 前言
 
 其实在面试的过程中很有可能会被问到“介绍一下BFC”
