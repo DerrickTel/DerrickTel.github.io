@@ -535,3 +535,700 @@ dispatch({ type: ActionTypes.INIT } as A)
 里面的`INIT`，在我们之前`REPLACE`里面也有介绍，也是一个随机数而已。
 
 ## applyMiddleware
+
+这个坑，是之前在`createStore`的`ensureCanMutateNextListeners`埋下的，现在我们一起来看看这个。
+
+这个redux拓展dispatch的唯一的标准的方法。
+
+首先，我们得知道怎么用。我贴下我自己demo。
+
+```js
+// middleware
+const logger = (store:any) => (next:any) => (action:any) => {
+  // debugger
+  console.info('dispatching', action)
+  const result = next(action);
+  console.log('next state', store.getState())
+  return result
+}
+```
+
+这个是官方的demo，不了解的，[点我快速了解](https://www.redux.org.cn/docs/advanced/Middleware.html)
+
+ok，我们直接贴源码，很短，但是有很多奥妙（奥妙打钱！）。
+
+```js
+export default function applyMiddleware(
+  ...middlewares: Middleware[]
+): StoreEnhancer<any> {
+  return (createStore: StoreEnhancerStoreCreator) => <S, A extends AnyAction>(
+    reducer: Reducer<S, A>,
+    preloadedState?: PreloadedState<S>
+  ) => {
+    const store = createStore(reducer, preloadedState)
+    let dispatch: Dispatch = () => {
+      throw new Error(
+        'Dispatching while constructing your middleware is not allowed. ' +
+          'Other middleware would not be applied to this dispatch.'
+      )
+    }
+
+    const middlewareAPI: MiddlewareAPI = {
+      getState: store.getState,
+      dispatch: (action, ...args) => dispatch(action, ...args)
+    }
+    const chain = middlewares.map(middleware => middleware(middlewareAPI))
+    dispatch = compose<typeof dispatch>(...chain)(store.dispatch)
+
+    return {
+      ...store,
+      dispatch
+    }
+  }
+}
+```
+
+看起来很短，但是却有很多深奥的地方。一个个来。
+
+在开始之前，我们需要先了解一下函数柯里化。直接上demo帮助理解
+
+```js
+function test(a) {
+  return function test2(b){
+    console.log(a + b)
+  }
+}
+
+const t = test(1);
+t(2); // 3
+```
+
+这里就是一个简单的函数柯里化，我们可以先存储一下第一次传入的参数，后面如果这个`1`会复用的话，那么我们定义的变量`t`就可以在很多地方使用，里面用到了闭包的知识，而且是非常典型的闭包，存储形参`a`，实参`1`。
+
+还记得我们的使用用例吗？
+
+```js
+// middleware
+const logger = (store:any) => (next:any) => (action:any) => {
+  // debugger
+  console.info('dispatching', action)
+  const result = next(action);
+  console.log('next state', store.getState())
+  return result
+}
+```
+
+这里面第一个参数`store`就是对应到我们`createStore`源码里面我们挖的坑。
+
+```js
+if (typeof enhancer !== 'undefined') {
+    // 如果enhancer存在，那他必须是个function, 否则throw Error哈
+    if (typeof enhancer !== 'function') {
+      throw new Error('Expected the enhancer to be a function.')
+    }
+    /**
+     * 传入符合参数类型的参数，就可以执行 enhancer,
+     * 但是这个return深深的吸引了我, 因为说明有applyMiddleware的时候后面的都不用看了 ??? 当然不可能
+     * 可是applyMiddleware其实是必用项，所以猜想一下applyMiddleware强化store之后会enhancer赋值undefined，再次调用createStore
+     * 上下打个debugger看一下执行顺序(debugger位置以注释)，果然不出所料
+     * 好了， 假设我们还不知道applyMiddleware()这个funcrion具体干了什么，
+     * 只知道他做了一些处理然后重新调用了createStore并且enhancer参数为undefined
+     * 先记下，后续在看applyMiddleware， 因为我们现在要看的是createStore
+     * * */
+    // debugger
+
+    return enhancer(createStore)(
+      reducer,
+      preloadedState as PreloadedState<S>
+    ) as Store<ExtendState<S, StateExt>, A, StateExt, Ext> & Ext
+  }
+```
+
+第二个`next`，其实就是`middlewareAPI`里面的`dispatch`
+
+```js
+const middlewareAPI: MiddlewareAPI = {
+      getState: store.getState,
+      dispatch: (action, ...args) => dispatch(action, ...args),
+      test:2,
+    }
+```
+
+增加一个`log`在`middleware`里面就可以知道了
+
+```js
+const logger = (store:any) => (next:any) => (action:any) => {
+  // debugger
+  
+  console.log(store)
+  console.log('next===',next)
+  console.log(action)
+  console.info('dispatching', action)
+  // const result = next(action);
+  console.log('next state', store.getState())
+  // return result
+}
+```
+
+这个时候`log`的是我们在`createStore`里面的`dispatch`，还出现了我们的注释
+
+说明`next`这个参数就是对应的`middlewareAPI`里面的`dispatch`也就是说是`createStore`里面的`dispatch`。
+
+
+
+第三个参数`action`
+
+很简单，其实就是普普通通的一个`action`。不过是从我们`middleaware`里面得到的。这个没有疑惑。
+
+
+
+> 我们会发现一个很有趣的事情就是，如果我们注释掉调用`next(action)`，并且不将结果`return`的话，这个`action`就会被卡住，没有发出去，被我们打断了，所以这就是我们为什么需要做这个的原因。那么就可以引申出我们可以自定义打断某些情况下的action，然后需要在那些情况下给action里面加些什么，都可以办到。
+
+
+
+ok，我们看了之后好像知道`applyMiddleware`里面的参数都对应这哪些东西了，但是似乎不知道为什么是一种柯里化的形式来展示的。我们看下面的代码就会知道了。
+
+```js
+// 调用每一个这样形式的middleware = store => next => action =>{}, 
+// 组成一个这样[f(next)=>acticon=>next(action)...]的array，赋值给chain
+const chain = middlewares.map(middleware => middleware(middlewareAPI))
+// debugger
+// compose看 -> compose.js文件
+// compose(...chain)会形成一个调用链, next指代下一个函数的注册, 这就是中间件的返回值要是next(action)的原因
+// 如果执行到了最后next就是原生的store.dispatch方法
+dispatch = compose(...chain)(store.dispatch) 
+```
+
+里面提到了`compose`这个函数，其实这个函数就是整个中间件的精髓所在。柯里化的奥义！
+
+```js
+export default function compose(...funcs: Function[]) {
+  if (funcs.length === 0) {
+    // infer the argument type so it is usable in inference down the line
+    return <T>(arg: T) => arg
+  }
+
+  if (funcs.length === 1) {
+    return funcs[0]
+  }
+
+  return funcs.reduce((a, b) => (...args: any) => a(b(...args)))
+}
+```
+
+不了解reduce的同学可以[点这里](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)。
+
+这个compose其实是一个调用链，我们的所有的中间件都会按顺序加载，然后是👇这种形式
+
+```js
+middleware = middleware1 => middleware2 => middleware3 => middleware4 //...
+```
+
+我们通过一下代码知道，确实是往下传递的。
+
+```js
+// middleware
+const logger = (store:any) => (next:any) => (action:any) => {
+  // debugger
+  
+  console.log(store)
+  console.log('next===',next)
+  console.log(action)
+  console.info('dispatching', action)
+  action.aa = 2
+  const result = next(action);
+  console.log('next state', store.getState())
+  return result
+}
+
+const logger2 = (store:any) => (next:any) => (action:any) => {
+  // debugger
+  
+  console.log(store)
+  console.log('next2===',next)
+  console.log('logger2==-=-=-=-=-=-=',action)
+  console.info('dispatching', action)
+  const result = next(action);
+  console.log('next state', store.getState())
+  return result
+}
+
+const store = createStore(rootReducer, {todos:[]}, applyMiddleware(logger, logger2));
+```
+
+在`logger2`里面确实打印出来`aa`这个属性的值，而`logger`却没有
+
+
+
+## compose
+
+这个在上面介绍applyMiddleware的时候说过了。就不多说了。
+
+
+
+## combineReducers
+
+这个中文翻译就是《组合reducer》。
+
+其实就是 字面意思，我们看一下怎么用就了解了。
+
+```js
+export default combineReducers({
+  firstReducer: todos,
+  secondReducer: visibilityFilter
+})
+```
+
+然后我们看一下`log`出来的`props`是什么样子的。
+
+```js
+{
+	firstReducer: {todos: Array(0)}
+	secondReducer: "SHOW_ALL"
+}
+```
+
+也就是我们一开始设置进去的`key`值，返回的时候也是按这个格式返回的。
+
+里面有许多函数，我们先看他到处的函数`combineReducers`
+
+### combineReducers
+
+```js
+// 用于合并reducer 一般是这样combineReducers({a,b,c})
+export default function combineReducers(reducers: ReducersMapObject) {
+  // reducers中key的数组
+  const reducerKeys = Object.keys(reducers)
+  // 最终的reducer
+  const finalReducers: ReducersMapObject = {}
+
+  // 循环， 目的为了给finalReducers赋值， 过虑了不符合规范的reducer
+  for (let i = 0; i < reducerKeys.length; i++) {
+    // 接受当前的key
+    const key = reducerKeys[i]
+
+    // 如果不是生产环境， 当前的reducer是undefined会给出warning
+    if (process.env.NODE_ENV !== 'production') {
+      if (typeof reducers[key] === 'undefined') {
+        warning(`No reducer provided for key "${key}"`)
+      }
+    }
+
+    // reducer要是一个function
+    if (typeof reducers[key] === 'function') {
+      // 赋值给finalReducers
+      finalReducers[key] = reducers[key]
+    }
+  }
+  // 符合规范的reducer的key数组
+  const finalReducerKeys = Object.keys(finalReducers)
+
+  // This is used to make sure we don't warn about the same
+  // keys multiple times.
+  // 意想不到的key， 先往下看看
+  let unexpectedKeyCache: { [key: string]: true }
+  // production环境为{}
+  if (process.env.NODE_ENV !== 'production') {
+    unexpectedKeyCache = {}
+  }
+
+  let shapeAssertionError: Error
+  try {
+    // 看这个function
+    assertReducerShape(finalReducers)
+  } catch (e) {
+    shapeAssertionError = e
+  }
+
+  // 返回function， 即为createStore中的reducer参数既currentReducer
+  // 自然有state和action两个参数， 可以回createStore文件看看currentReducer(currentState, action)
+  return function combination(
+    state: StateFromReducersMapObject<typeof reducers> = {},
+    action: AnyAction
+  ) {
+    // reducer不规范报错
+    if (shapeAssertionError) {
+      throw shapeAssertionError
+    }
+
+    // 比较细致的❌信息，顺便看了一下getUndefinedStateErrorMessage，都是用于提示warning和error的， 不过多解释了
+    if (process.env.NODE_ENV !== 'production') {
+      const warningMessage = getUnexpectedStateShapeWarningMessage(
+        state,
+        finalReducers,
+        action,
+        unexpectedKeyCache
+      )
+      if (warningMessage) {
+        warning(warningMessage)
+      }
+    }
+
+    let hasChanged = false
+    const nextState: StateFromReducersMapObject<typeof reducers> = {}
+    for (let i = 0; i < finalReducerKeys.length; i++) {
+
+      // 获取finalReducerKeys的key和value（function）
+      const key = finalReducerKeys[i]
+      const reducer = finalReducers[key]
+      // 当前key的state值
+      const previousStateForKey = state[key]
+      // 执行reducer， 返回当前state
+      const nextStateForKey = reducer(previousStateForKey, action)
+      // 不存在返回值报错
+      if (typeof nextStateForKey === 'undefined') {
+        const errorMessage = getUndefinedStateErrorMessage(key, action)
+        throw new Error(errorMessage)
+      }
+      // 新的state放在nextState对应的key里
+      nextState[key] = nextStateForKey
+      // 判断新的state是不是同一引用， 以检验reducer是不是纯函数
+      hasChanged = hasChanged || nextStateForKey !== previousStateForKey
+    }
+    hasChanged =
+      hasChanged || finalReducerKeys.length !== Object.keys(state).length
+      // 改变了返回nextState
+    return hasChanged ? nextState : state
+  }
+  /*
+  *  新版本的redux这部分改变了实现方法
+  *  老版本的redux使用的reduce函数实现的
+  *  简单例子如下
+  * function combineReducers(reducers) {
+  *    return (state = {}, action) => {
+  *        return Object.keys(reducers).reduce((currentState, key) => {
+  *            currentState[key] = reducers[key](state[key], action);
+  *             return currentState;
+  *         }, {})
+  *      };
+  *    }
+  * 
+  * */
+}
+```
+
+上面是主要源码，一个个剖析进去。
+
+先是对数据进行清洗，第一次筛选出符合要求的`reducer`们
+
+```js
+// reducers中key的数组
+  const reducerKeys = Object.keys(reducers)
+  // 最终的reducer
+  const finalReducers: ReducersMapObject = {}
+
+  // 循环， 目的为了给finalReducers赋值， 过虑了不符合规范的reducer
+  for (let i = 0; i < reducerKeys.length; i++) {
+    // 接受当前的key
+    const key = reducerKeys[i]
+
+    // 如果不是生产环境， 当前的reducer是undefined会给出warning
+    if (process.env.NODE_ENV !== 'production') {
+      if (typeof reducers[key] === 'undefined') {
+        warning(`No reducer provided for key "${key}"`)
+      }
+    }
+
+    // reducer要是一个function
+    if (typeof reducers[key] === 'function') {
+      // 赋值给finalReducers
+      finalReducers[key] = reducers[key]
+    }
+  }
+```
+
+
+
+### assertReducerShape
+
+初筛之后的finalReducers会交由assertReducerShape再一次进行检验。里面就是一个判断，然后给出警告⚠️之类的。就不多说了。
+
+```js
+function assertReducerShape(reducers) {
+  Object.keys(reducers).forEach(key => {
+    const reducer = reducers[key]
+   // reducer返回值
+    const initialState = reducer(undefined, { type: ActionTypes.INIT })
+    // undefined throw Error
+    if (typeof initialState === 'undefined') {
+      throw new Error(
+        `Reducer "${key}" returned undefined during initialization. ` +
+          `If the state passed to the reducer is undefined, you must ` +
+          `explicitly return the initial state. The initial state may ` +
+          `not be undefined. If you don't want to set a value for this reducer, ` +
+          `you can use null instead of undefined.`
+      )
+    }
+
+    // 很明显assertReducerShape是用于reducer的规范
+    // 回到combineReducers
+    if (
+      typeof reducer(undefined, {
+        type: ActionTypes.PROBE_UNKNOWN_ACTION()
+      }) === 'undefined'
+    ) {
+      throw new Error(
+        `Reducer "${key}" returned undefined when probed with a random type. ` +
+          `Don't try to handle ${
+            ActionTypes.INIT
+          } or other actions in "redux/*" ` +
+          `namespace. They are considered private. Instead, you must return the ` +
+          `current state for any unknown actions, unless it is undefined, ` +
+          `in which case you must return the initial state, regardless of the ` +
+          `action type. The initial state may not be undefined, but can be null.`
+      )
+    }
+  })
+}
+```
+
+
+
+### combination
+
+然后就是返回combination这个函数。参数的意义就是他的名字。就不多说了。
+
+```js
+return function combination(state = {}, action) {
+    // reducer不规范报错
+    if (shapeAssertionError) {
+      throw shapeAssertionError
+    }
+
+    // 比较细致的❌信息，顺便看了一下getUndefinedStateErrorMessage，都是用于提示warning和error的， 不过多解释了
+    if (process.env.NODE_ENV !== 'production') {
+      const warningMessage = getUnexpectedStateShapeWarningMessage(
+        state,
+        finalReducers,
+        action,
+        unexpectedKeyCache
+      )
+      if (warningMessage) {
+        warning(warningMessage)
+      }
+    }
+
+    let hasChanged = false
+    const nextState = {}
+    for (let i = 0; i < finalReducerKeys.length; i++) {
+      // 获取finalReducerKeys的key和value（function）
+      const key = finalReducerKeys[i]
+      const reducer = finalReducers[key]
+      // 当前key的state值
+      const previousStateForKey = state[key]
+      // 执行reducer， 返回当前state
+      const nextStateForKey = reducer(previousStateForKey, action)
+      // 不存在返回值报错
+      if (typeof nextStateForKey === 'undefined') {
+        const errorMessage = getUndefinedStateErrorMessage(key, action)
+        throw new Error(errorMessage)
+      }
+      // 新的state放在nextState对应的key里
+      nextState[key] = nextStateForKey
+      // 判断新的state是不是同一引用， 以检验reducer是不是纯函数
+      hasChanged = hasChanged || nextStateForKey !== previousStateForKey
+    }
+    // 改变了返回nextState
+    return hasChanged ? nextState : state
+  }
+  /*
+  *  新版本的redux这部分改变了实现方法
+  *  老版本的redux使用的reduce函数实现的
+  *  简单例子如下
+  * function combineReducers(reducers) {
+  *    return (state = {}, action) => {
+  *        return Object.keys(reducers).reduce((currentState, key) => {
+  *            currentState[key] = reducers[key](state[key], action);
+  *             return currentState;
+  *         }, {})
+  *      };
+  *    }
+  * 
+  * */
+```
+
+
+
+其实就是执行reducer，然后把值拿出来比对，如果是引用的话就返回之前的state，如果不是就使用新的。他的比对和之前说的数组比对一样，都是比对内存地址。
+
+为什么要这么做呢？
+
+好问题！
+
+这样做的好处其实就是为了纯函数，为了一切可预测。而且简单的比较内存地址比递归的性能好太多了。
+
+那么我们怎么样才可以契合这样的理念呢？
+
+就是我们在写reducer返回的时候，需要返回一个全新的对象，通常是
+
+```js
+return{
+	...state,
+	xx: xx
+}
+```
+
+类似这样。这样的话js就会新开辟一个内存地址出来。在比对的时候内存地址就不会相同了。
+
+
+
+## bindActionCreators
+
+这个函数其实非常少用到，而且也没有什么特别晦涩的东西，只是一个封装。但是是一种更为优雅的方式。
+
+直接看代码，很少。
+
+```js
+export default function bindActionCreators(actionCreators, dispatch) {
+  // actionCreators为function
+  if (typeof actionCreators === 'function') {
+    return bindActionCreator(actionCreators, dispatch)
+  }
+
+  // 不是object throw Error
+  if (typeof actionCreators !== 'object' || actionCreators === null) {
+    throw new Error(
+      `bindActionCreators expected an object or a function, instead received ${
+        actionCreators === null ? 'null' : typeof actionCreators
+      }. ` +
+        `Did you write "import ActionCreators from" instead of "import * as ActionCreators from"?`
+    )
+  }
+
+  // object 转为数组
+  const keys = Object.keys(actionCreators)
+  // 定义return 的props
+  const boundActionCreators = {}
+  for (let i = 0; i < keys.length; i++) {
+    // actionCreators的key 通常为actionCreators function的name（方法名）
+    const key = keys[i]
+    // function => actionCreators工厂方法本身
+    const actionCreator = actionCreators[key]
+    if (typeof actionCreator === 'function') {
+      // 参数为{actions：function xxx}是返回相同的类型
+      boundActionCreators[key] = bindActionCreator(actionCreator, dispatch)
+    }
+  }
+  // return 的props
+  return boundActionCreators
+}
+```
+
+代码很简单也很清晰，就是弄一个新的对象，然后把`actionCreators`里面的`value`变成`bindActionCreator(actionCreator, dispatch)`的值，那么一起看一下`bindActionCreator`
+
+```js
+function bindActionCreator<A extends AnyAction = AnyAction>(
+  actionCreator: ActionCreator<A>,
+  dispatch: Dispatch
+) {
+  return function (this: any, ...args: any[]) {
+    return dispatch(actionCreator.apply(this, args))
+  }
+}
+```
+
+其实这里看起来有点迷糊，看也是能看懂，其实就是返回一个方法，这个方法是干什么的呢？返回执行dispatch之后的返回值。这么搞这么一圈究竟有什么秘密呢？
+
+我们写一个demo就会知道了。
+
+假如我们要做一个动态的增加的action，分别为点击一次+1，点击一次+2，点击一次+3。
+
+我们需要
+
+```js
+const counterIncActionCreator = function(step) {
+  return {
+    type: 'INCREMENT',
+    step: step || 1
+  }
+}
+
+// 为了简化代码我把dispatch函数定义为只有打印功能的函数
+const dispatch = function(action) {
+  console.log(action)
+}
+
+const action1 = counterIncActionCreator()
+dispatch(action1) // { type: 'INCREMENT', step: 1 }
+
+const action2 = counterIncActionCreator(2)
+dispatch(action2) // { type: 'INCREMENT', step: 2 }
+
+const action3 = counterIncActionCreator(3)
+dispatch(action3) // { type: 'INCREMENT', step: 3 }
+
+```
+
+有点难受其实，但是我们用了`bindActionCreator`之后
+
+```js
+const increment = bindActionCreator(counterIncActionCreator, dispatch)
+
+increment() // { type: 'INCREMENT', step: 1 }
+
+increment(2) // { type: 'INCREMENT', step: 2 }
+
+increment(3) // { type: 'INCREMENT', step: 3 }
+
+```
+
+就整个帅起来，有没有？！更加优雅了。
+
+而且我们还可以制作增和减的两个工厂🏭
+
+```js
+const MyActionCreators = {
+  increment: function(step) {
+    return {
+      type: 'INCREMENT',
+      step: step || 1
+    }
+  },
+
+  decrement: function(step) {
+    return {
+      type: 'DECREMENT',
+      step: - (step || 1)
+    }
+  }
+}
+
+```
+
+
+
+老方法
+
+```js
+// 原始的调度方式
+dispatch(MyActionCreators.increment()) // { type: 'INCREMENT', step: 1 }
+dispatch(MyActionCreators.increment(2)) // { type: 'INCREMENT', step: 2 }
+dispatch(MyActionCreators.increment(3)) // { type: 'INCREMENT', step: 3 }
+dispatch(MyActionCreators.decrement()) // { type: 'DECREMENT', step: -1 }
+dispatch(MyActionCreators.decrement(2)) // { type: 'DECREMENT', step: -2 }
+dispatch(MyActionCreators.decrement(3)) // { type: 'DECREMENT', step: -3 }
+
+```
+
+进化之后
+
+```js
+MyNewActionCreators.increment() // { type: 'INCREMENT', step: 1 }
+MyNewActionCreators.increment(2) // { type: 'INCREMENT', step: 2 }
+MyNewActionCreators.increment(3) // { type: 'INCREMENT', step: 3 }
+MyNewActionCreators.decrement() // { type: 'DECREMENT', step: -1 }
+MyNewActionCreators.decrement(2) // { type: 'DECREMENT', step: -2 }
+MyNewActionCreators.decrement(3) // { type: 'DECREMENT', step: -3 }
+
+```
+
+
+
+## Redux总结
+
+至此我们的redux源码阅读就到此为止。
+
+接下来我们一起学习一下和redux配合使用的react-redux
+
+## react-redux
+
