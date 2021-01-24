@@ -1,5 +1,5 @@
 ---
-title: 「如何给github提一个PR」
+title: 「如何给开源库提一个PR」
 date: 2021-01-22 16:39:14
 tags: [github]
 categories: [github]
