@@ -149,6 +149,49 @@ cover: /image/cover/github.jpg
 
 一个优秀项目通常会有代码审核，这个时候，你可能需要修改一下测试用例，然后我们只需要在前面创建的分支上继续`push`就好了。可能还会有作者给你的意见。改完之后继续`push`
 
+
+
+### 填坑
+
+
+
+前面说的，我们fork的只是当时的代码，后续作者更新的我们需要重新拉取，操作如下：
+
+#### 添加
+
+```
+$ git remote add upstream https://github.com/xx/xx.git
+```
+
+#### 查看
+
+```
+$ git remote -v 
+
+origin	ssh://xxx (fetch)
+origin	ssh://xxx (push)
+upstream	ssh://yyy (fetch)
+upstream	ssh://yyy (push)
+```
+
+#### 取消
+
+```
+$ git branch --unset-upstream
+```
+
+#### 拉取
+
+覆盖本地的 master。
+
+```
+$ git fetch upstream
+$ git checkout master
+$ git rebase upstream/master
+```
+
+
+
 ### 最后
 
 只需要等待作者`merge`啦。然后祝大家顺利，有任何问题都可以在评论区指出或者于我讨论。
