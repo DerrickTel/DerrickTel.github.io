@@ -1,10 +1,8 @@
----
-title: 【重识前端】React-Router源码阅读
+### title: 【重识前端】React-Router源码阅读
 date: 2020-11-14 20:29:17
 tags: [源码阅读, React]
 category: [重拾前端]
 cover: /image/cover/web.jpeg
----
 
 # 前言
 
@@ -34,7 +32,7 @@ npm install react-router-dom
 
 在大家安装之余，我简答的介绍一下`react-router`和`react-router-dom`的区别。
 
-## `react-router`和`react-router-dom`的区别。
+## react-router和react-router-dom的区别。
 
 ### 先看提供的API
 
@@ -44,11 +42,11 @@ import { Switch, Route, Router } from 'react-router';
 import { Swtich, Route, BrowserRouter, HashHistory, Link } from 'react-router-dom';
 ```
 
-#### React-router：
+#### React-router
 
 提供了路由的核心api。如Router、Route、Switch等，但没有提供有关dom操作进行路由跳转的api；
 
-#### React-router-dom：
+#### React-router-dom
 
 提供了`BrowserRouter`、`Route`、`Link`等api，可以通过dom操作触发事件控制路由。
 
@@ -113,7 +111,7 @@ export default App;
 
 这样就完成了一个最简单的示例了。
 
-# 架构思路
+# SPA的核心思想
 
 - 监听`URL`的变化
 - 改变某些`context`的值
@@ -369,9 +367,15 @@ Router这个组件主要就是将一些数据进行存储。存到`Context`，�
 
 ## history
 
+### createBrowserHistory
+
+#### 返回的内容
+
 之前一直有不断提到的`history`，我们一起来看看它是谁
 
-源码连接：https://github.com/ReactTraining/history/blob/master/packages/history/index.ts#L559
+源码连接：https://github.com/ReactTraining/history/blob/master/packages/history/index.ts
+
+我们之前用到的`createBrowserHistory`，他其实是返回的一个对象，这个对象里面有我们常用的一些方法。
 
 ```javascript
 let history: BrowserHistory = {
@@ -418,4 +422,307 @@ let history: BrowserHistory = {
 }
 ```
 
-大部分精髓就是这里。发现有多熟悉的伙伴！ => `push`、`replace`、`go`等等。这些其实都是`window`提供的。
+大部分精髓就是这里。发现有多熟悉的伙伴！ => `push`、`replace`、`go`等等。有些其实都是`window`提供的。
+
+有些直接看代码就可以明白的就不解释了，比如`forward`，`back`。
+
+##### go
+
+比如上面提到的`go`方法，截取部分源码。
+
+```typescript
+let globalHistory = window.history;
+function go(delta: number) {
+    globalHistory.go(delta);
+  }
+```
+
+
+
+##### createHref
+
+```typescript
+
+// 返回一个完整的url
+export function createPath({
+  pathname = '/',
+  search = '',
+  hash = ''
+}: PartialPath) {
+  return pathname + search + hash;
+}
+
+// 返回一个url
+function createHref(to: To) {
+  	// 看上面
+    return typeof to === 'string' ? to : createPath(to);
+  }
+```
+
+
+
+##### push
+
+`push`的源码，里面附带了一些会用到的函数。
+
+```typescript
+// 就是简单处理一下返回值。
+function getNextLocation(to: To, state: State = null): Location {
+  return readOnly<Location>({
+    ...location,
+    ...(typeof to === 'string' ? parsePath(to) : to),
+    state,
+    key: createKey()
+  });
+}
+
+// 进行判断
+function allowTx(action: Action, location: Location, retry: () => void) {
+    return (
+      // 长度为0就返回true，长度大于0就调用函数，并传入参数。这个blockers等一下仔细探讨一下
+      !blockers.length || (blockers.call({ action, location, retry }), false)
+    );
+  }
+
+
+// 顾名思义获取state和url
+function getHistoryStateAndUrl(
+    nextLocation: Location,
+    index: number
+  ): [HistoryState, string] {
+    return [
+      {
+        usr: nextLocation.state,
+        key: nextLocation.key,
+        idx: index
+      },
+      // 看上面 有专门介绍
+      createHref(nextLocation)
+    ];
+  }
+
+// 返回一些关于location的信息
+function getIndexAndLocation(): [number, Location] {
+    let { pathname, search, hash } = window.location;
+    let state = globalHistory.state || {};
+    return [
+      state.idx,
+      readOnly<Location>({
+        pathname,
+        search,
+        hash,
+        state: state.usr || null,
+        key: state.key || 'default'
+      })
+    ];
+  }
+
+// 执行listeners内部的一些函数（也就是跳转），后面也会详细解读
+function applyTx(nextAction: Action) {
+    action = nextAction;
+    [index, location] = getIndexAndLocation();
+    listeners.call({ action, location });
+  }
+
+
+function push(to: To, state?: State) {
+  	// 这里是一个枚举值
+    let nextAction = Action.Push;
+  	
+    let nextLocation = getNextLocation(to, state);
+  	// 顾名思义，就是再来一次
+    function retry() {
+      push(to, state);
+    }
+
+    if (allowTx(nextAction, nextLocation, retry)) {
+      let [historyState, url] = getHistoryStateAndUrl(nextLocation, index + 1);
+
+      // TODO: Support forced reloading
+      // try...catch because iOS limits us to 100 pushState calls :/
+      try {
+        // MDN的地址: https://developer.mozilla.org/zh-CN/docs/Web/API/History/pushState
+        globalHistory.pushState(historyState, '', url);
+      } catch (error) {
+        // They are going to lose state here, but there is no real
+        // way to warn them about it since the page will refresh...
+        // MDN的地址: https://developer.mozilla.org/zh-CN/docs/Web/API/Location/assign
+        window.location.assign(url);
+      }
+
+      applyTx(nextAction);
+    }
+  }
+```
+
+我在注释里面已经进行非常详细的解读了，用到的每个函数都有解释或者官方权威的url。
+
+总结一下：`history.push`的一个完整流程
+
+- 调用`history.pushState`
+  - 错误由`window.location.assign`来处理
+- 执行一下`listeners`里面的函数
+
+是的，你没有看错，就这么简单，只是里面有很多调用的函数，我都截取出来一一解释，做到每行代码都理解，所以显得比较长，概括来说就是这么简单。
+
+重点来看一下`listen`和被调用的`createBrowserHistory`
+
+##### replace
+
+这里面用的函数，在前面的push都有解析，可以往上面去找找，就不多赘述了。
+
+```typescript
+function replace(to: To, state?: State) {
+    let nextAction = Action.Replace;
+    let nextLocation = getNextLocation(to, state);
+    function retry() {
+      replace(to, state);
+    }
+
+    if (allowTx(nextAction, nextLocation, retry)) {
+      let [historyState, url] = getHistoryStateAndUrl(nextLocation, index);
+
+      // TODO: Support forced reloading
+      globalHistory.replaceState(historyState, '', url);
+
+      applyTx(nextAction);
+    }
+  }
+```
+
+
+
+##### listen
+
+在`history`返回的`listen`是一个函数。这个函数我们之前在react-router的源码中发现，他是在构造函数和卸载的时候会用到。
+
+```javascript
+listen(listener) {
+      return listeners.push(listener);
+    },
+```
+
+仔细看看，这个`listeners`是在做些什么。
+
+##### createEvents
+
+这个函数后面的blockers也会用到
+
+```typescript
+let listeners = createEvents<Listener>();
+
+function createEvents<F extends Function>(): Events<F> {
+  let handlers: F[] = [];
+
+  return {
+    get length() {
+      return handlers.length;
+    },
+    push(fn: F) {
+      handlers.push(fn);
+      return function() {
+        handlers = handlers.filter(handler => handler !== fn);
+      };
+    },
+    call(arg) {
+      handlers.forEach(fn => fn && fn(arg));
+    }
+  };
+}
+```
+
+这个方法，顾名思义，就是创建事件。定义了一个变量 `handlers` 数组，用于存放要处理的回调函数事件。
+
+然后返回了一个对象。
+
+`push` 方法就是往 `handlers` 中添加要执行的函数。
+
+这块主要在 `history.listen()` 中使用，可以翻到开头看下 `history` 中返回了 `listen()` 方法，就是调用了`listeners.push(listener)` 。
+
+最后 `call()` 方法就比较容易理解，就是取出 `handlers` 里面的回调函数并逐个执行。
+
+总结一下，就是存储一下`push`进来的函数，并进行过滤。之后调用的时候会依次执行。`length`就是当前拥有的函数数量。
+
+再切回去，就会发现，每次调用这个`listen`就相当于`push`一个函数到内部的一个变量`handlers`中。
+
+##### block
+
+和`listeners`一样，也是用`createEvents`创建的，就不多说啦。说一下哪里会用到这个吧。
+
+```typescript
+let blockers = createEvents<Blocker>();
+```
+
+- `block(prompt)` - (function) Prevents navigation (see [the history docs](https://github.com/ReactTraining/history/blob/master/docs/blocking-transitions.md))
+
+这个是`react-router`官网的解释。
+
+我这里简单概括一下，就是用于关闭或者回退浏览器的误操作会用到的。详细的可以看点击进去查看。
+
+##### 总结
+
+至此，我们调用的`createBrowserHistory`所返回的一些属性的源码都已经了如指掌了。但是具体是怎么工作还是一知半解。
+
+#### 具体核心原理
+
+先秀一下源码。history的核心原理就是这个。先别被这么多行代码唬到了，很多都是我们在之前的push里面有解释的
+
+```typescript
+const PopStateEventType = 'popstate';
+let blockedPopTx: Transition | null = null;
+function handlePop() {
+  // 如果有
+  if (blockedPopTx) {
+    blockers.call(blockedPopTx);
+    blockedPopTx = null;
+  } else {
+    let nextAction = Action.Pop;
+    let [nextIndex, nextLocation] = getIndexAndLocation();
+
+    if (blockers.length) {
+      if (nextIndex != null) {
+        let delta = index - nextIndex;
+        if (delta) {
+          // Revert the POP
+          blockedPopTx = {
+            action: nextAction,
+            location: nextLocation,
+            retry() {
+              go(delta * -1);
+            }
+          };
+
+          go(delta);
+        }
+      } else {
+        // Trying to POP to a location with no index. We did not create
+        // this location, so we can't effectively block the navigation.
+        warning(
+          false,
+          // TODO: Write up a doc that explains our blocking strategy in
+          // detail and link to it here so people can understand better what
+          // is going on and how to avoid it.
+          `You are trying to block a POP navigation to a location that was not ` +
+          `created by the history library. The block will fail silently in ` +
+          `production, but in general you should do all navigation with the ` +
+          `history library (instead of using window.history.pushState directly) ` +
+          `to avoid this situation.`
+        );
+      }
+    } else {
+      applyTx(nextAction);
+    }
+  }
+}
+
+window.addEventListener(PopStateEventType, handlePop);
+```
+
+重点说一下`window.addEventListener(PopStateEventType, handlePop)`
+
+MDN地址：https://developer.mozilla.org/zh-CN/docs/Web/API/Window/popstate_event
+
+其实就是监听路由的变化然后，执行回调函数
+
+# 核心API
+
