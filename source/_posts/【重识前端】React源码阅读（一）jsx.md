@@ -1,5 +1,5 @@
 ---
-title: 【重识前端】地址栏中输入网址后发生了什么
+title: 【重识前端】React源码阅读（一）什么是jsx
 date: 2021-03-29 10:08:31
 tags: [react]
 category: [重拾前端]
@@ -25,7 +25,7 @@ cover: /image/cover/react.jpeg
 
 （图片来自Boss某聘）
 
-![offer](/Users/wangjie/Documents/08DerrickGit/DerrickTel.github.io/source/image/react/offer.png)
+![offer](/image/react1/offer.png)
 
 
 
@@ -99,7 +99,7 @@ ReactDOM.render(<App />, rootElement);
 
 
 
-![console](/Users/wangjie/Documents/08DerrickGit/DerrickTel.github.io/source/image/react/console.png)
+![console](/image/react/console.png)
 
 
 
@@ -136,7 +136,7 @@ ReactDOM.render(<App />, rootElement);
 
 
 
-![bebel](/Users/wangjie/Documents/08DerrickGit/DerrickTel.github.io/source/image/react/bebel.png)
+![bebel](/image/react/bebel.png)
 
 
 
@@ -250,6 +250,193 @@ export function createElement(type, config, children) {
 先不看参数，我们就先看返回值的名字和这个函数的名字。我们初步猜测，`jsx`是通过`createElement`这个函数来创建一个`React`元素，然后由`ReactDOM.render`来渲染到我们指定名字的元素上。
 
 
+
+
+
+ok，那么我们平常写的jsx元素就是`ReactElement`生成的东西。我们看看`ReactElement`生成的是个什么东西。
+
+我们先把我们平常写的`jsx`给打印一下。
+
+
+
+![element](/image/react/element.png)
+
+
+
+凭直觉，是不是感觉这个是一个`虚拟DOM`的节点，他有类型然后又是`div`，对应的会不会是`html`的`div`标签？还有`className`，这个很明显就是对应`class`。我们去一看究竟。
+
+## ReactElement
+
+
+
+```javascript
+const ReactElement = function(type, key, ref, self, source, owner, props) {
+  const element = {
+    // 这个是一个React结点的标识符
+    $$typeof: REACT_ELEMENT_TYPE,
+
+    // 很明显就是对应的html的标签
+    type: type,
+    key: key,
+    ref: ref,
+    props: props,
+
+    // 记录由谁创建的，暂时也不知道什么用。先挖个坑
+    _owner: owner,
+  };
+
+  // 开发环境下的配置，主要就是Object.freeze，可以在MDN上面查一下。我就不多介绍了
+  if (__DEV__) {
+    // The validation flag is currently mutative. We put it on
+    // an external backing store so that we can freeze the whole object.
+    // This can be replaced with a WeakMap once they are implemented in
+    // commonly used development environments.
+    element._store = {};
+
+    // To make comparing ReactElements easier for testing purposes, we make
+    // the validation flag non-enumerable (where possible, which should
+    // include every environment we run tests in), so the test framework
+    // ignores it.
+    Object.defineProperty(element._store, 'validated', {
+      configurable: false,
+      enumerable: false,
+      writable: true,
+      value: false,
+    });
+    // self and source are DEV only properties.
+    Object.defineProperty(element, '_self', {
+      configurable: false,
+      enumerable: false,
+      writable: false,
+      value: self,
+    });
+    // Two elements created in two different places should be considered
+    // equal for testing purposes and therefore we hide it from enumeration.
+    Object.defineProperty(element, '_source', {
+      configurable: false,
+      enumerable: false,
+      writable: false,
+      value: source,
+    });
+    if (Object.freeze) {
+      Object.freeze(element.props);
+      Object.freeze(element);
+    }
+  }
+
+  return element;
+};
+```
+
+
+
+看过之后，是不是和我们看到的节点一样，首先，标注一下`$$typeof`为`react节点`。然后就是正常的传参，比如`key`，`ref`，`props`等等。
+
+## ReactDOM.render
+
+这个就是React节点渲染为真是节点的操作。话不多说，上源码！
+
+
+
+```javascript
+export function isValidContainer(node: mixed): boolean {
+  return !!(
+    node &&
+    (node.nodeType === ELEMENT_NODE ||
+      node.nodeType === DOCUMENT_NODE ||
+      node.nodeType === DOCUMENT_FRAGMENT_NODE ||
+      (node.nodeType === COMMENT_NODE &&
+        (node: any).nodeValue === ' react-mount-point-unstable '))
+  );
+}
+
+export function render(
+  element: React$Element<any>,
+  container: Container,
+  callback: ?Function,
+) {
+  // 用于抛出错误的, 就是判断这个container是不是找得到
+  invariant(
+    isValidContainer(container),
+    'Target container is not a DOM element.',
+  );
+  if (__DEV__) {
+    const isModernRoot =
+      isContainerMarkedAsRoot(container) &&
+      container._reactRootContainer === undefined;
+    if (isModernRoot) {
+      console.error(
+        'You are calling ReactDOM.render() on a container that was previously ' +
+          'passed to ReactDOM.createRoot(). This is not supported. ' +
+          'Did you mean to call root.render(element)?',
+      );
+    }
+  }
+  
+  // 这里面涉及到了fiber的一些架构，我想之后再说，再挖个坑
+  return legacyRenderSubtreeIntoContainer(
+    null,
+    element,
+    container,
+    false,
+    callback,
+  );
+}
+```
+
+
+
+有没有感觉很简单，去除`__DEV__`情况的话。也是返回一个函数的结果。。。
+
+
+
+## ReactDOM.hydrate
+
+
+
+这个函数我发现很有意思，与ReactDOM.render只有一行代码不一样
+
+```diff
+legacyRenderSubtreeIntoContainer(
+    null,
+    element,
+    container,
+-   false,
++   true,
+    callback,
+  );
+```
+
+
+
+首先，这个`hydrate`的意思是注水。大致的意思是给一个结点增加水分，增添色彩。之前是给`SSR`过程中添加点击事件之类使用的。在`React17`之后会淘汰掉`ReactDOM.Render`，全部用`ReactDOM.hydrate`来代替。
+
+React官网的一句话
+
+> 使用 `ReactDOM.render()` 对服务端渲染容器进行 hydrate 操作的方式已经被废弃，并且会在 React 17 被移除。作为替代，请使用 [`hydrate()`](https://zh-hans.reactjs.org/docs/react-dom.html#hydrate)。
+
+
+
+## 为什么要使用JSX
+
+这里分享一个解题的小技巧。为什么要XX其实就是要问你，XX的好处。ok，那接下来就很好回答了
+
+首先，因为如果不用`jsx`，我们就要在代码里面写上百个`React.crearteElement`。
+
+第二，这个语法糖可以让开发者使用熟悉的`HTML`标签来创建`虚拟DOM`，降低学习成本。提升开发效率与开发体验
+
+
+
+
+
+![bebel](/image/react/bebel.png)
+
+
+
+# 剩余的坑
+
+- legacyRenderSubtreeIntoContainer（涉及fiber架构
+- _owner（创建的时候，这个属性有什么用
 
 # 索引
 
