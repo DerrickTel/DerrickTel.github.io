@@ -3,7 +3,7 @@ title: 【重识前端】React源码阅读（一）什么是jsx
 date: 2021-03-29 10:08:31
 tags: [react]
 category: [重拾前端]
-cover: /image/cover/react.jpeg
+cover: /image/cover/react.png
 
 ---
 
@@ -36,6 +36,16 @@ cover: /image/cover/react.jpeg
 如今前端御三家：`Angular`、`React`、`Vue`三分天下。国内更青睐`React`和`Vue`。所以，从学习的角度更应该学习`React`。
 
 
+
+https://www.npmtrends.com/react-vs-vue-vs-@angular/core
+
+
+
+![offer](/image/react1/download.jpg)
+
+
+
+![offer](/image/react1/stats)
 
 ## 为什么非要学习源码
 
