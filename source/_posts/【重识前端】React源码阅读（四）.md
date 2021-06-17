@@ -1,6 +1,6 @@
 ---
-title: 【重识前端】React源码阅读（三）4千字告诉你 Fiber 初始化
-date: 2021-04-06 14:08:31
+title: 【重识前端】React源码阅读（四）
+date: 2021-06-30 14:08:31
 tags: [react]
 category: [重拾前端]
 cover: /image/cover/react.png
