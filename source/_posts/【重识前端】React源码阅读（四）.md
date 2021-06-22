@@ -97,6 +97,27 @@ function updateContainer(element, container, parentComponent, callback) {
 
 这两个兄弟弄完不知道后面还剩下什么，一起看看吧。
 
+这里先补充一下，`initializeUpdateQueue`内部的东西，因为也有会用了，肯定会有疑问。
+
+```typescript
+export function initializeUpdateQueue<State>(fiber: Fiber): void {
+  const queue: UpdateQueue<State> = {
+    baseState: fiber.memoizedState,
+    firstBaseUpdate: null,
+    lastBaseUpdate: null,
+    shared: {
+      pending: null,
+      interleaved: null,
+      lanes: NoLanes,
+    },
+    effects: null,
+  };
+  fiber.updateQueue = queue;
+}
+```
+
+
+
 ## enqueueUpdate
 
 ```tsx
@@ -107,12 +128,14 @@ export function enqueueUpdate<State>(
 ) {
   const updateQueue = fiber.updateQueue;
   if (updateQueue === null) {
+    // 只在fiber 卸载的时候会发生
     // Only occurs if the fiber has been unmounted.
     return;
   }
 
   const sharedQueue: SharedQueue<State> = (updateQueue: any).shared;
-
+  // 比较fiber lane和lane，相同时更新，具体内容可以看下面的源码。这里不加讨论
+  // render初始化时不执行
   if (isInterleavedUpdate(fiber, lane)) {
     const interleaved = sharedQueue.interleaved;
     if (interleaved === null) {
@@ -154,4 +177,28 @@ export function enqueueUpdate<State>(
   }
 }
 ```
+
+
+
+### isInterleavedUpdate
+
+```typescript
+export function isInterleavedUpdate(fiber: Fiber, lane: Lane) {
+  return (
+    // TODO: Optimize slightly by comparing to root that fiber belongs to.
+    // Requires some refactoring. Not a big deal though since it's rare for
+    // concurrent apps to have more than a single root.
+    workInProgressRoot !== null &&
+    (fiber.mode & ConcurrentMode) !== NoMode &&
+    // If this is a render phase update (i.e. UNSAFE_componentWillReceiveProps),
+    // then don't treat this as an interleaved update. This pattern is
+    // accompanied by a warning but we haven't fully deprecated it yet. We can
+    // remove once the deferRenderPhaseUpdateToNextBatch flag is enabled.
+    (deferRenderPhaseUpdateToNextBatch ||
+      (executionContext & RenderContext) === NoContext)
+  );
+}
+```
+
+上面提到的。函数的大概是判断是否是交错更新。
 
