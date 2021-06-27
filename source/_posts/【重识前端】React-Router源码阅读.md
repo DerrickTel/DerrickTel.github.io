@@ -66,7 +66,7 @@ import { Swtich, Route, BrowserRouter, HashHistory, Link } from 'react-router-do
 
 👌，大家🔥应该已经安装完了吧？接下来简单的修改一下脚手架里面的内容。主要是为了熟悉对手，知己知彼百战百胜。
 
-![demo](/image/router/demo.png)
+![demo](/image/router/demo.gif)
 
 修改一下`src/app.js`
 
