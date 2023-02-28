@@ -1225,7 +1225,6 @@ dispatch(MyActionCreators.increment(3)) // { type: 'INCREMENT', step: 3 }
 dispatch(MyActionCreators.decrement()) // { type: 'DECREMENT', step: -1 }
 dispatch(MyActionCreators.decrement(2)) // { type: 'DECREMENT', step: -2 }
 dispatch(MyActionCreators.decrement(3)) // { type: 'DECREMENT', step: -3 }
-
 ```
 
 进化之后
@@ -1237,7 +1236,6 @@ MyNewActionCreators.increment(3) // { type: 'INCREMENT', step: 3 }
 MyNewActionCreators.decrement() // { type: 'DECREMENT', step: -1 }
 MyNewActionCreators.decrement(2) // { type: 'DECREMENT', step: -2 }
 MyNewActionCreators.decrement(3) // { type: 'DECREMENT', step: -3 }
-
 ```
 
 
