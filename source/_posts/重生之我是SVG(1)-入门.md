@@ -3,7 +3,7 @@ title: 重生之我是SVG(1)-入门
 date: 2023-02-27 10:39:56
 tags: [svg]
 category: [重拾前端]
-cover: /image/cover/web.jpeg
+cover: /image/cover/svg.png
 ---
 
 
