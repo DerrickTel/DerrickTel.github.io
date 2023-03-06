@@ -187,7 +187,7 @@ LineTo直线的命令`L,V,H`如下。展示一下英文意思更好记~
     </svg>
 ```
 
-
+![1](/image/svg2/qt.png)
 
 
 
@@ -232,7 +232,7 @@ LineTo直线的命令`L,V,H`如下。展示一下英文意思更好记~
     </svg>
 ```
 
-
+![1](/image/svg2/cs.png)
 
 ## A椭圆
 
@@ -243,6 +243,89 @@ LineTo直线的命令`L,V,H`如下。展示一下英文意思更好记~
 | A    | (`rx` `ry` `angle` `large-arc-flag` `sweep-flag` `x` `y`)+   | 在当前位置和坐标 `x`,`y` 之间绘制一条椭圆曲线。用于绘制圆弧的椭圆中心根据命令的其它参数确定：`rx` 和`ry` 是椭圆的两个半径；`angle` 表示椭圆相对于 x 轴的旋转角度；`large-arc-flag` 和 `sweep-flag` 允许选择必须绘制的弧线，因为其它参数可以绘制 4 条可能的弧线。`large-arc-flag` 允许选择一个大弧线（`1`）或一个小弧线（`0`），`sweep-flag` 允许选择一条顺时针旋转的弧线（`1`）或一条逆时针旋转的弧线（`0`）坐标 `x`,`y` 将成为下一个命令中的当前位置。后续参数集合的序列将被解释为隐式的绝对位置的椭圆曲线（`A`）命令的参数。 |
 | a    | (`rx` `ry` `angle` `large-arc-flag` `sweep-flag` `dx` `dy`)+ | 在当前位置和指定位置之间绘制一条椭圆曲线。指定位置为当前位置沿 x 轴偏移 `dx` 以及沿 y 轴偏移 `dy` 处。用于绘制圆弧的椭圆中心根据命令的其它参数确定：`rx` 和 `ry` 是椭圆的两个半径；`angle` 表示椭圆相对于 x 轴的旋转角度；`large-arc-flag` 和 `sweep-flag` 允许选择必须绘制的弧线，因为其它参数可以绘制 4 条可能的弧线。`large-arc-flag` 允许选择一个大弧线（`1`）或一个小弧线（`0`），`sweep-flag` 允许选择一条顺时针旋转的弧线（`1`）或一条逆时针旋转的弧线（`0`）当前位置沿 x 轴偏移 `dx` 以及沿 y 轴偏移后的位置将成为下一个命令中的当前位置。后续参数集合的序列将被解释为隐式的相对位置的椭圆曲线（`a`）命令的参数。 |
 
-```
+```html
+<svg style="border: 1px solid blue">
+      <path fill="none" stroke="red" d="M 60,10
+           A 6 4 10 1 0 140,10" />
+
+      <path fill="none" stroke="green" d="M 90,60
+      A 60 40 60 1 0 90,110" />
+
+      <path fill="none" stroke="black" d="M 190,60
+      A 60 40 60 0 1 190,110" />
+
+    </svg>
 ```
 
+![1](/image/svg2/a.png)
+
+## Z闭合
+
+| 命令 | 参数 | 备注                                                         |
+| :--- | :--- | :----------------------------------------------------------- |
+| Z, z |      | 通过连接路径的最后一个点与路径的起始点来闭合当前的子路径。如果这两个点的坐标不同，则在两者之间绘制一条直线。 |
+
+```html
+<svg style="border: 1px solid blue">
+      <path stroke-width="10" stroke="red" d="M 50,30
+           l -30,80 60,0" />
+
+      <path stroke-width="10" stroke="red" d="M 140,30
+           l -30,80 60,0 -30,-80" />
+
+      <path stroke-width="10" stroke="red" d="M 240,30
+           l -30,80 60,0  -30,-80 z" />
+
+    </svg>
+```
+
+![1](/image/svg2/z.png)
+
+
+
+## 总结
+
+现在来画一个爱心❤️。算是阶段性的成果。
+
+我的思路是这样的，下面两条直线，然后上面是两个二次贝塞尔曲线。
+
+```html
+<svg style="border: 1px solid blue">
+      <path fill="black" stroke-width="5" stroke="red" d="M 50,30
+        q 15,-30 30,0
+        q 15,-30 30,0
+        l -30, 30
+        z" />
+
+    </svg>
+```
+
+但是不够平滑，直线太直了。再次升级。
+
+把直线换成三次贝塞尔曲线。
+
+```html
+<svg style="border: 1px solid blue">
+      <path fill="black" stroke-width="5" stroke="red" d="M 50,30
+        q 15,-30 30,0
+        q 15,-30 30,0
+        l -30, 30
+        z" />
+
+      <path fill="black" stroke-width="5" stroke="red" d="M 150,30
+        q 15,-30 30,0
+        q 15,-30 30,0
+        c 0,0 0,30 -30, 40
+        c -30,-10 -30,-40 -30,-40
+        z" />
+
+    </svg>
+```
+
+![1](/image/svg2/heart.png)
+
+至少看起来不是很生硬了。。不过还是要慢慢细微调整。
+
+今天的B学习就学到这吧！
+
+TiMi走起！
