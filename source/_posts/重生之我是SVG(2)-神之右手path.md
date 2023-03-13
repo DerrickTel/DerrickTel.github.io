@@ -13,8 +13,8 @@ cover: /image/cover/svg.png
 
 下面可能会用到但是不会详细介绍的2个标签
 
-- [<use>](https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element/use)
-- [<g>](https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element/g)
+- [use](https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element/use)
+- [g](https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element/g)
 
 
 
