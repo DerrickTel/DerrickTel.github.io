@@ -24,7 +24,7 @@ cover: /image/cover/canvas.jpeg
 
 > 如果你绘制出来的图像是扭曲的，尝试用 width 和 height 属性为<canvas>明确规定宽高，而不是使用 CSS。
 
-[`id`](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes/id)属性并不是<canvas>元素所特有的，而是每一个 HTML 元素都默认具有的属性（比如 class 属性）。给每个标签都加上一个 id 属性是个好主意，因为这样你就能在我们的脚本中很容易的找到它。
+[`id`](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes/id)属性并不是`<canvas>`元素所特有的，而是每一个 HTML 元素都默认具有的属性（比如 class 属性）。给每个标签都加上一个 id 属性是个好主意，因为这样你就能在我们的脚本中很容易的找到它。
 
 
 
@@ -32,7 +32,7 @@ cover: /image/cover/canvas.jpeg
 
 在一些不支持canvas的浏览器或者某些特定版本下，需要加入替代内容。
 
-这非常简单：我们只是在<canvas>标签中提供了替换内容。不支持<canvas>的浏览器将会忽略容器并在其中渲染后备内容。而支持<canvas>的浏览器将会忽略在容器中包含的内容，并且只是正常渲染 canvas。
+这非常简单：我们只是在`<canvas>`标签中提供了替换内容。不支持`<canvas>`的浏览器将会忽略容器并在其中渲染后备内容。而支持`<canvas>`的浏览器将会忽略在容器中包含的内容，并且只是正常渲染` canvas`。
 
 ```html
 <canvas id="canvas" width="150" height="150">
@@ -510,3 +510,483 @@ function draw() {
   text.width; // 16;
 }
 ```
+
+![1](/image/canvas/7.png)
+
+上图[源码](https://github.com/DerrickTel/study-demo/tree/main/canvas)
+
+
+
+## 图像
+
+canvas中还有一项强大的功能就是他的图像处理能力，并不局限于静态图片，可以做到动态图片，甚至是游戏画面等等。这个图片的来源也不至于常见的JEPG、PNG、GIF等，甚至可以是video的某一帧，甚至是其他的canvas作为图片源。
+
+使用图片大致可以分为两步
+
+- 获得一个HTML对象（可以是URL，图片，视频，其他canvas）
+- 使用`drawImage()`函数将获取的内容绘制在canvas上
+
+
+
+### 图片源
+
+
+1. HTMLImageElement -> `<img>`
+2. HTMLVideoElement -> `<video>`
+3. HTMLCanvasElement -> `<canvas>`
+5. ImageBitmap -> 位图资源，这里就不展开介绍了。因为浏览器的支持不是很好。
+
+#### HTMLImageElement
+
+第一种就是直接拿到`<img src="" id="img" />`
+
+第二种是自己创建一个元素，使用 `new Image()` 或 `document.createElement("img")` 方法
+
+```javascript
+const c = document.getElementById("canvas-1");
+const ctx = c.getContext("2d");
+const img = document.getElementById("img1");
+const img2 = new Image();
+img2.onload = function() {
+    ctx.drawImage(this, 10, 10);
+}
+img2.src = "https://www.twle.cn/static/i/meimei_160x160.png";
+ctx.drawImage(img, 10, 10);
+```
+
+#### HTMLVideoElement
+
+在`drawImage`里的`video`并不是拿到什么数据流，而且拿的那一瞬间的一帧图案。
+
+这里给一个简单的小demo后面也有源码。大家可以运行一下自己试试看。
+
+![1](/image/canvas/8.gif)
+
+>  在线代码: https://codesandbox.io/s/heuristic-feather-qnwdcs?file=/index.html
+
+#### HTMLCanvasElement
+
+这里很简单。就是传入别的`canvas`的`context`就好。直接看个例子就可以悟道了。
+
+```javascript
+const canvas1  = document.createElement("canvas1");
+const ctx1 = canvas1.getContext("2d");
+ctx1.fillText("canvas"）
+
+const canvas2  = document.createElement("canvas1");
+const ctx2 = canvas1.getContext("2d");
+canvas2.drawImage(canvas1, 10, 10);
+```
+
+就这么简单，直接将`canvas1`作为`drawImage`的第一个参数就行
+
+
+
+### drwaImage的变化
+
+`drawImage` 方法的又一变种是增加了两个用于控制图像在 canvas 中缩放的参数。
+
+- [`drawImage(image, x, y, width, height)`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/drawImage)
+
+  这个方法多了 2 个参数：`width` 和 `height，`这两个参数用来控制 当向 canvas 画入时应该缩放的大小
+
+`drawImage` 方法的第三个也是最后一个变种有 8 个新参数，用于控制做切片显示的。
+
+- [`drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/drawImage)
+
+  第一个参数和其他的是相同的，都是一个图像或者另一个 canvas 的引用。其他 8 个参数最好是参照右边的图解，前 4 个是定义图像源的切片位置和大小，后 4 个则是定义切片的目标显示位置和大小。
+
+
+
+## 状态恢复与保存
+
+在了解变形之前，我先介绍两个在你开始绘制复杂图形时必不可少的方法。
+
+- [`save()`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/save)
+
+  保存画布 (canvas) 的所有状态
+
+- [`restore()`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/restore)
+
+  save 和 restore 方法是用来保存和恢复 canvas 状态的，都没有参数。Canvas 的状态就是当前画面应用的所有样式和变形的一个快照。
+
+Canvas 状态存储在栈中，每当`save()`方法被调用后，当前的状态就被推送到栈中保存。一个绘画状态包括：
+
+- 当前应用的变形（即移动，旋转和缩放，见下）
+
+- 以及下面这些属性：[`strokeStyle`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/strokeStyle), [`fillStyle`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/fillStyle), [`globalAlpha`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/globalAlpha), [`lineWidth`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/lineWidth), [`lineCap`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/lineCap), [`lineJoin`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/lineJoin), [`miterLimit`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/miterLimit), [`lineDashOffset`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/lineDashOffset), [`shadowOffsetX`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/shadowOffsetX), [`shadowOffsetY`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/shadowOffsetY), [`shadowBlur`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/shadowBlur), [`shadowColor`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/shadowColor), [`globalCompositeOperation`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation), [`font`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/font), [`textAlign`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/textAlign), [`textBaseline`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/textBaseline), [`direction`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/direction), [`imageSmoothingEnabled`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled)
+
+  
+
+你可以调用任意多次 `save`方法。每一次调用 `restore` 方法，上一个保存的状态就从栈中弹出，所有设定都恢复。
+
+我们尝试用这个连续矩形的例子来描述 canvas 的状态栈是如何工作的。
+
+第一步是用默认设置画一个大四方形，然后保存一下状态。改变填充颜色画第二个小一点的蓝色四方形，然后再保存一下状态。再次改变填充颜色绘制更小一点的半透明的白色四方形。
+
+到目前为止所做的动作和前面章节的都很类似。不过一旦我们调用 `restore`，状态栈中最后的状态会弹出，并恢复所有设置。如果不是之前用 `save` 保存了状态，那么我们就需要手动改变设置来回到前一个状态，这个对于两三个属性的时候还是适用的，一旦多了，我们的代码将会猛涨。
+
+当第二次调用 `restore` 时，已经恢复到最初的状态，因此最后是再一次绘制出一个黑色的四方形。
+
+```javascript
+ctx.fillRect(0, 0, 150, 150);   // 使用默认设置绘制一个矩形
+ctx.save();                  // 保存默认状态
+
+ctx.fillStyle = '#09F'       // 在原有配置基础上对颜色做改变
+ctx.fillRect(15, 15, 120, 120); // 使用新的设置绘制一个矩形
+
+ctx.save();                  // 保存当前状态
+ctx.fillStyle = '#FFF'       // 再次改变颜色配置
+ctx.globalAlpha = 0.5;
+ctx.fillRect(30, 30, 90, 90);   // 使用新的配置绘制一个矩形
+
+ctx.restore();               // 重新加载之前的颜色状态
+ctx.fillRect(45, 45, 60, 60);   // 使用上一次的配置绘制一个矩形
+
+ctx.restore();               // 加载默认颜色配置
+ctx.fillRect(60, 60, 30, 30);   // 使用加载的配置绘制一个矩形
+```
+
+![1](/image/canvas/9.png)
+
+[源码](https://github.com/DerrickTel/study-demo/tree/main/canvas)
+
+## 变形
+
+这里面的都和css的一样，就不多介绍了。
+
+- `translate(x, y)`
+
+  x *是左右偏移量，*y 是上下偏移量，
+
+- `rotate(angle)`
+
+  这个方法只接受一个参数：旋转的角度 (angle)，它是顺时针方向的，以弧度为单位的值。
+
+​		旋转的中心点始终是 canvas 的原点，如果要改变它，我们需要用到 `translate`方法。
+
+- **`scale(x, y)`**
+
+  `scale`方法可以缩放画布的水平和垂直的单位。两个参数都是实数，可以为负数，x 为水平缩放因子，y 为垂直缩放因子，如果比 1 小，会缩小图形，如果比 1 大会放大图形。默认值为 1，为实际大小。
+
+  
+
+  
+
+- [`transform(a, b, c, d, e, f)`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/transform)
+
+​		这个方法是将当前的变形矩阵乘上一个基于自身参数的矩阵
+
+​		这个函数的参数各自代表如下：
+
+1. `a (m11) `水平方向的缩放
+2. `b(m12)`竖直方向的倾斜偏移
+3. `c(m21)`水平方向的倾斜偏移
+4. `d(m22)`竖直方向的缩放
+5. `e(dx)`水平方向的移动
+6. `f(dy)`竖直方向的移动
+
+- [`setTransform(a, b, c, d, e, f)`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
+
+  这个方法会将当前的变形矩阵重置为单位矩阵，然后用相同的参数调用 `transform`方法。如果任意一个参数是无限大，那么变形矩阵也必须被标记为无限大，否则会抛出异常。从根本上来说，该方法是取消了当前变形，然后设置为指定的变形，一步完成。
+
+- [`resetTransform()`](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/resetTransform)
+
+  重置当前变形为单位矩阵，它和调用以下语句是一样的：`ctx.setTransform(1, 0, 0, 1, 0, 0);`
+
+
+
+
+
+![1](/image/canvas/10.png)
+
+[源码](https://github.com/DerrickTel/study-demo/tree/main/canvas)
+
+
+
+## 图像混合
+
+`globalCompositeOperation = type`
+
+type有26种。
+
+```JavaScript
+[ 'source-over','source-in','source-out','source-atop',
+ 'destination-over','destination-in','destination-out','destination-atop',
+ 'lighter', 'copy','xor', 'multiply', 'screen', 'overlay', 'darken',
+ 'lighten', 'color-dodge', 'color-burn', 'hard-light', 'soft-light',
+ 'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity'
+]
+```
+
+![1](/image/canvas/11.png)
+
+[源码](https://github.com/DerrickTel/study-demo/tree/main/canvas)
+
+## 基础动画
+
+我们知道canvas其实就是一个画布，我们在上面作画。等我们看到的时候已经作画完毕。那要怎么制作动画呢？如果需要移动它，我们不得不对所有东西（包括之前的）进行重绘。重绘是相当费时的，而且性能很依赖于电脑的速度。
+
+我们可以制作很多帧，每一帧都是定格。已快速的速度播放，比如小时候看的定格动画。看的影视剧其实也可以拆分为60个定格图片。打的游戏FPS多少就是拆成多少帧"canvas"
+
+那这样的话是不是就有思路啦？
+
+有两种方法可以实现这样的动画操控。首先可以通过 `setInterval` 和 `setTimeout` 方法来控制在设定的时间点上执行重绘。
+
+
+
+```javascript
+setInterval(() => {
+  ctx.arc(x, y, 50, 0, Math.PI * 2, true);
+  ctx.stroke();
+
+  if(x >= 300) {
+  	x = 70
+  } else {
+  	x += 1
+  }
+}, 1000 / 60)
+```
+
+![1](/image/canvas/12.gif)
+
+好像差点意思，不是我们想要的那个圆圈的活动啊。虽然确实动起来了！是不是我们在画新的圆之前先清除一下？
+
+代码稍作修改
+
+```javascript
+const timer = setInterval(() => {
+          ctx.clearRect(0,0,450,150)
+          ctx.translate(x, y)
+          ctx.arc(70, 80, 50, 0, Math.PI * 2, true);
+          ctx.stroke();
+          if(x >= 300) {
+            x = 1
+          } else {
+            x += 1
+          }
+        }, 1000 / 10)
+```
+
+![1](/image/canvas/13.gif)
+
+之前还没发现，怎么中间还有一条线，而且这个间距明明都是 `1`啊，为什么越来越大，而且这个并没有清除成功啊！
+
+1. 中间的线应该是因为我们是连续作画，没有`closepath`导致的拖拽。
+2. 间距应该是因为这个translate每次都在之前的基础继续叠加，变成指数相关了。需要`save`一下状态
+3. 清除失败应该也是因为没有save清除之后的状态。
+
+再改一下！！！！
+
+```javascript
+const timer = setInterval(() => {
+          ctx.save()
+          ctx.beginPath();
+          ctx.clearRect(0,0,450,150)
+          ctx.translate(x, y)
+          ctx.arc(70, 80, 50, 0, Math.PI * 2, true);
+          ctx.stroke();
+          ctx.closePath();
+          ctx.restore();
+          if(x >= 300) {
+            x = 1
+          } else {
+            x += 1
+          }
+        }, 1000 / 60)
+```
+
+![1](/image/canvas/14.gif)
+
+ohhhhhhhhhhh！成型！！！
+
+### 总结
+
+1. 重绘之前要清空、或者保留状态。
+2. 画好一个东西之后要`closePath`
+
+### 强化训练
+
+做一个时钟~
+
+![1](/image/canvas/15.gif)
+
+[我做的源码](https://github.com/DerrickTel/study-demo/blob/main/canvas/bell.html)~
+
+里面几乎用到了之前学到的所有知识。还是很值得练习的，最好是自己手写一份，我的只能算参考不算标准答案。
+
+## 拖影动画
+
+拖影效果的原理就是将之前的清除函数`clearRect`换成带透明度的一个蒙版覆盖上去
+
+```javascript
+ctx.fillStyle = 'rgba(255,255,255,0.3)';
+ctx.fillRect(0,0, 450, 150);
+// ctx.clearRect(0, 0, 450, 150)
+```
+
+直接替换一下之前做的时钟。
+
+![1](/image/canvas/16.gif)
+
+[源码](https://github.com/DerrickTel/study-demo/blob/main/canvas/bell.html)
+
+## 事件
+
+### 键盘事件
+
+| 属性       | 描述                       |
+| ---------- | -------------------------- |
+| onkeydown  | 当按下按键时运行脚本       |
+| onkeypress | 当按下并松开按键时运行脚本 |
+| onkeyup    | 当松开按键时运行脚本       |
+
+### 鼠标事件
+
+通过鼠标触发事件, 类似用户的行为
+
+| 属性         | 描述                                     |
+| ------------ | ---------------------------------------- |
+| onclick      | 当单击鼠标时运行脚本                     |
+| ondblclick   | 当双击鼠标时运行脚本                     |
+| ondrag       | 当拖动元素时运行脚本                     |
+| ondragend    | 当拖动操作结束时运行脚本                 |
+| ondragenter  | 当元素被拖动至有效的拖放目标时运行脚本   |
+| ondragleave  | 当元素离开有效拖放目标时运行脚本         |
+| ondragover   | 当元素被拖动至有效拖放目标上方时运行脚本 |
+| ondragstart  | 当拖动操作开始时运行脚本                 |
+| ondrop       | 当被拖动元素正在被拖放时运行脚本         |
+| onmousedown  | 当按下鼠标按钮时运行脚本                 |
+| onmousemove  | 当鼠标指针移动时运行脚本                 |
+| onmouseout   | 当鼠标指针移出元素时运行脚本             |
+| onmouseover  | 当鼠标指针移至元素之上时运行脚本         |
+| onmouseup    | 当松开鼠标按钮时运行脚本                 |
+| onmousewheel | 当转动鼠标滚轮时运行脚本                 |
+| onscroll     | 当滚动元素的滚动条时运行脚本             |
+
+### 实践
+
+```javascript
+c.addEventListener('mouseover', function(e){
+  timer = setInterval(draw, 1000 / 60);
+});
+
+c.addEventListener('mouseout', function(e){
+  clearInterval(timer);
+});
+```
+
+
+
+## 像素操作
+
+之前学习过对于图像的获取。现在要学习的是对于图像具体细节的获取，某个像素点的色彩。对于图像的操作，比如图像平滑操作以及如何从canvas画布中保存图像。
+
+### ImageData 对象
+
+`ImageData` 对象中存储着 `canvas` 对象真实的像素数据
+
+它提供了以下属性
+
+| 属性             | 说明                                                         |
+| ---------------- | ------------------------------------------------------------ |
+| ImageData.data   | 只读，`Uint8ClampedArray` 类型的一维数组，包含着 `RGBA` 格式的整型数据，范围在 `0` 至 `255` 之间（ 包括 255 ）顺序的数据， |
+| ImageData.height | 只读，无符号长整型（unsigned long），图片高度，单位是像素    |
+| ImageData.width  | 只读，无符号长整型（unsigned long），图片宽度，单位是像素    |
+
+### Uint8ClampedArray
+
+`Uint8ClampedArray` 是一个 `高度 × 宽度 × 4 bytes` 的一维数组
+
+这是什么意思呢 ？
+
+直接上图
+
+![1](/image/canvas/17.png)
+
+可以看到他每四个单位里面就会放好一个点位的`RGBA`对应的数值。那我们可以做些什么呢？
+
+很简单！取色器！
+
+### 取色器
+
+结合之前学到的事件，配置鼠标事件，将鼠标当前的颜色输出展示出来。
+
+```javascript
+const canvas = document.getElementById("canvas");
+
+const div = document.getElementById("div");
+const span = document.getElementById("span");
+
+if (canvas.getContext) {
+  const ctx = canvas.getContext("2d");
+  const img = new Image()
+  img.src = './img/colorPicker.jpeg'
+  img.onload = function() {
+    ctx.drawImage(img, 0, 0);
+    img.style.display = 'none';
+  };
+
+  function pick(event) {
+    const x = event.offsetX;
+    const y = event.offsetY;
+    const pixel = ctx.getImageData(x, y, 1, 1);
+    const data = pixel.data;
+
+    const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
+    div.style.background = rgba;
+    span.textContent = rgba
+  }
+
+  canvas.addEventListener('mousemove', pick)
+}
+```
+
+![1](/image/canvas/18.gif)
+
+既然可以取到颜色那么，对于颜色的修改就可以直接赋值操作了。比如加滤镜之类的，这个需要上网找特定的颜色修改公式了。不展开啦。
+
+
+
+## 保存
+
+[`HTMLCanvasElement`](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement) 提供一个 `toDataURL()` 方法，此方法在保存图片的时候非常有用。它返回一个包含被类型参数规定的图像表现格式的[数据链接](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/Data_URLs)。返回的图片分辨率是 96 dpi。
+
+- [`canvas.toDataURL('image/png')`](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toDataURL)
+
+  默认设定。创建一个 PNG 图片。
+
+- [`canvas.toDataURL('image/jpeg', quality)`](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toDataURL)
+
+  创建一个 JPG 图片。你可以有选择地提供从 0 到 1 的品质量，1 表示最好品质，0 基本不被辨析但有比较小的文件大小。
+
+当你从画布中生成了一个数据链接，例如，你可以将它用于任何[``](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/image)元素，或者将它放在一个有 download 属性的超链接里用于保存到本地。
+
+你也可以从画布中创建一个[`Blob`](https://developer.mozilla.org/zh-CN/docs/Web/API/Blob)对像。
+
+- [`canvas.toBlob(callback, type, encoderOptions)`](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toBlob)
+
+  这个创建了一个在画布中的代表图片的 `Blob` 对像。
+
+```javascript
+const canvas = document.getElementById("canvas");
+// 创建一个 a 标签，并设置 href 和 download 属性
+const el = document.createElement('a');
+// 设置 href 为图片经过 base64 编码后的字符串，默认为 png 格式
+el.href = canvas.toDataURL();
+el.download = '文件名称';
+
+// 创建一个点击事件并对 a 标签进行触发
+const event = new MouseEvent('click');
+el.dispatchEvent(event);
+```
+
+
+
+## 结语
+
+至此`canvas`基本上算是小成了
+
+有问题欢迎留言交流
+
+[所有的源码点我](https://github.com/DerrickTel/study-demo/tree/main/canvas)
