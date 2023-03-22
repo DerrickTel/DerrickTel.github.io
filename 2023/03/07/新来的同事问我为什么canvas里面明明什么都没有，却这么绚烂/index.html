@@ -1,0 +1,620 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>前端妹子问我为什么canvas里面明明什么都没有，却这么绚烂 | Derrick</title><meta name="description" content="前端妹子问我为什么canvas里面明明什么都没有，却这么绚烂"><meta name="keywords" content="svg"><meta name="author" content="Derrick"><meta name="copyright" content="Derrick"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="前端妹子问我为什么canvas里面明明什么都没有，却这么绚烂"><meta name="twitter:description" content="前端妹子问我为什么canvas里面明明什么都没有，却这么绚烂"><meta name="twitter:image" content="http://derricktel.github.io/image/cover/canvas.jpeg"><meta property="og:type" content="article"><meta property="og:title" content="前端妹子问我为什么canvas里面明明什么都没有，却这么绚烂"><meta property="og:url" content="http://derricktel.github.io/2023/03/07/%E6%96%B0%E6%9D%A5%E7%9A%84%E5%90%8C%E4%BA%8B%E9%97%AE%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88canvas%E9%87%8C%E9%9D%A2%E6%98%8E%E6%98%8E%E4%BB%80%E4%B9%88%E9%83%BD%E6%B2%A1%E6%9C%89%EF%BC%8C%E5%8D%B4%E8%BF%99%E4%B9%88%E7%BB%9A%E7%83%82/"><meta property="og:site_name" content="Derrick"><meta property="og:description" content="前端妹子问我为什么canvas里面明明什么都没有，却这么绚烂"><meta property="og:image" content="http://derricktel.github.io/image/cover/canvas.jpeg"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://derricktel.github.io/2023/03/07/%E6%96%B0%E6%9D%A5%E7%9A%84%E5%90%8C%E4%BA%8B%E9%97%AE%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88canvas%E9%87%8C%E9%9D%A2%E6%98%8E%E6%98%8E%E4%BB%80%E4%B9%88%E9%83%BD%E6%B2%A1%E6%9C%89%EF%BC%8C%E5%8D%B4%E8%BF%99%E4%B9%88%E7%BB%9A%E7%83%82/"><link rel="next" title="重生之我是SVG(2)-神之右手path" href="http://derricktel.github.io/2023/03/01/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AFSVG(2)-%E7%A5%9E%E4%B9%8B%E5%8F%B3%E6%89%8Bpath/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">41</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">44</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">19</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-about"></i><span> 关于我</span></a></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础知识"><span class="toc-number">1.</span> <span class="toc-text">基础知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本使用"><span class="toc-number">2.</span> <span class="toc-text">基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#替代内容"><span class="toc-number">2.1.</span> <span class="toc-text">替代内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上下文Context"><span class="toc-number">2.2.</span> <span class="toc-text">上下文Context</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绘制"><span class="toc-number">3.</span> <span class="toc-text">绘制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#绘制矩形"><span class="toc-number">3.1.</span> <span class="toc-text">绘制矩形</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高清的Canvas"><span class="toc-number">3.2.</span> <span class="toc-text">高清的Canvas</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绘制路径"><span class="toc-number">3.3.</span> <span class="toc-text">绘制路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#画一个三角形"><span class="toc-number">3.4.</span> <span class="toc-text">画一个三角形</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#画一个圆弧"><span class="toc-number">3.5.</span> <span class="toc-text">画一个圆弧</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#自我学习"><span class="toc-number">3.5.1.</span> <span class="toc-text">自我学习</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二次贝塞尔曲线和三次贝塞尔曲线"><span class="toc-number">3.6.</span> <span class="toc-text">二次贝塞尔曲线和三次贝塞尔曲线</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#色彩与样式"><span class="toc-number">4.</span> <span class="toc-text">色彩与样式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#色彩"><span class="toc-number">4.1.</span> <span class="toc-text">色彩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#透明度"><span class="toc-number">4.2.</span> <span class="toc-text">透明度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线型"><span class="toc-number">4.3.</span> <span class="toc-text">线型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#渐变"><span class="toc-number">4.4.</span> <span class="toc-text">渐变</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图案样式"><span class="toc-number">4.5.</span> <span class="toc-text">图案样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#阴影"><span class="toc-number">4.6.</span> <span class="toc-text">阴影</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#填充规则"><span class="toc-number">4.7.</span> <span class="toc-text">填充规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文本"><span class="toc-number">5.</span> <span class="toc-text">文本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#绘制文本"><span class="toc-number">5.1.</span> <span class="toc-text">绘制文本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#有样式的文本"><span class="toc-number">5.2.</span> <span class="toc-text">有样式的文本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#预测文本宽度"><span class="toc-number">5.3.</span> <span class="toc-text">预测文本宽度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图像"><span class="toc-number">6.</span> <span class="toc-text">图像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#图片源"><span class="toc-number">6.1.</span> <span class="toc-text">图片源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#HTMLImageElement"><span class="toc-number">6.1.1.</span> <span class="toc-text">HTMLImageElement</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTMLVideoElement"><span class="toc-number">6.1.2.</span> <span class="toc-text">HTMLVideoElement</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTMLCanvasElement"><span class="toc-number">6.1.3.</span> <span class="toc-text">HTMLCanvasElement</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#drwaImage的变化"><span class="toc-number">6.2.</span> <span class="toc-text">drwaImage的变化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#状态恢复与保存"><span class="toc-number">7.</span> <span class="toc-text">状态恢复与保存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变形"><span class="toc-number">8.</span> <span class="toc-text">变形</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图像混合"><span class="toc-number">9.</span> <span class="toc-text">图像混合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础动画"><span class="toc-number">10.</span> <span class="toc-text">基础动画</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">10.1.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#强化训练"><span class="toc-number">10.2.</span> <span class="toc-text">强化训练</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拖影动画"><span class="toc-number">11.</span> <span class="toc-text">拖影动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件"><span class="toc-number">12.</span> <span class="toc-text">事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#键盘事件"><span class="toc-number">12.1.</span> <span class="toc-text">键盘事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#鼠标事件"><span class="toc-number">12.2.</span> <span class="toc-text">鼠标事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实践"><span class="toc-number">12.3.</span> <span class="toc-text">实践</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#像素操作"><span class="toc-number">13.</span> <span class="toc-text">像素操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ImageData-对象"><span class="toc-number">13.1.</span> <span class="toc-text">ImageData 对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Uint8ClampedArray"><span class="toc-number">13.2.</span> <span class="toc-text">Uint8ClampedArray</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#取色器"><span class="toc-number">13.3.</span> <span class="toc-text">取色器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存"><span class="toc-number">14.</span> <span class="toc-text">保存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结语"><span class="toc-number">15.</span> <span class="toc-text">结语</span></a></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(/image/cover/canvas.jpeg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">Derrick</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-about"></i><span> 关于我</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">前端妹子问我为什么canvas里面明明什么都没有，却这么绚烂</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2023-03-07 10:22:37"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2023-03-07</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2023-03-22 16:14:29"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2023-03-22</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E9%87%8D%E6%8B%BE%E5%89%8D%E7%AB%AF/">重拾前端</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div id="article-container"><p>前端妹子问我为什么官网上面只有一个canvas标签，里面什么都没有….</p>
+<p>我脸色一变”完了！官网挂了！“。走过去一看，原来是canvas的动画啊。</p>
+<p>”这个你想学啊~我教你啊，到时候你可别说听不懂“。</p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>使用 <code>&lt;canvas&gt;</code> 元素不是非常难，但你需要一些基本的<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML" target="_blank" rel="noopener">HTML</a>和<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript" target="_blank" rel="noopener">JavaScript</a>知识。除一些过时的浏览器不支持<code>&lt;canvas&gt;</code> 元素外，所有的新版本主流浏览器都支持它。Canvas 的默认大小为 300 像素 ×150 像素（宽 × 高，像素的单位是 px）。但是，可以使用 HTML 的高度和宽度属性来自定义 Canvas 的尺寸。为了在 Canvas 上绘制图形，我们使用一个 JavaScript 上下文对象，它能动态创建图像（creates graphics on the fly）。</p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p><code>&lt;canvas&gt;</code> 标签只有两个属性<strong>——</strong> <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/canvas#attr-width" target="_blank" rel="noopener"><code>width</code></a>和<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/canvas#attr-height" target="_blank" rel="noopener"><code>height</code></a>。这些都是可选的，并且同样利用 <a href="https://developer.mozilla.org/zh-CN/docs/Glossary/DOM" target="_blank" rel="noopener">DOM</a> <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement" target="_blank" rel="noopener">properties</a> 来设置。当没有设置宽度和高度的时候，canvas 会初始化宽度为 300 像素和高度为 150 像素（这个和<code>svg</code>一样）。该元素可以使用<a href="https://developer.mozilla.org/zh-CN/docs/Glossary/CSS" target="_blank" rel="noopener">CSS</a>来定义大小，但在绘制时图像会伸缩以适应它的框架尺寸：如果 CSS 的尺寸与初始画布的比例不一致，它会出现扭曲。</p>
+<blockquote>
+<p>如果你绘制出来的图像是扭曲的，尝试用 width 和 height 属性为<canvas>明确规定宽高，而不是使用 CSS。</p>
+</blockquote>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes/id" target="_blank" rel="noopener"><code>id</code></a>属性并不是<code>&lt;canvas&gt;</code>元素所特有的，而是每一个 HTML 元素都默认具有的属性（比如 class 属性）。给每个标签都加上一个 id 属性是个好主意，因为这样你就能在我们的脚本中很容易的找到它。</p>
+<h3 id="替代内容"><a href="#替代内容" class="headerlink" title="替代内容"></a>替代内容</h3><p>在一些不支持canvas的浏览器或者某些特定版本下，需要加入替代内容。</p>
+<p>这非常简单：我们只是在<code>&lt;canvas&gt;</code>标签中提供了替换内容。不支持<code>&lt;canvas&gt;</code>的浏览器将会忽略容器并在其中渲染后备内容。而支持<code>&lt;canvas&gt;</code>的浏览器将会忽略在容器中包含的内容，并且只是正常渲染<code>canvas</code>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"canvas"</span> <span class="attr">width</span>=<span class="string">"150"</span> <span class="attr">height</span>=<span class="string">"150"</span>&gt;</span></span><br><span class="line">  由于当然浏览器不支持canvas，就只显示我啦~</span><br><span class="line"><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="上下文Context"><a href="#上下文Context" class="headerlink" title="上下文Context"></a>上下文Context</h3><p><code>canvas</code>元素创造了一个固定大小的画布，它公开了一个或多个<strong>渲染上下文</strong>，其可以用来绘制和处理要展示的内容。后面会着重介绍2D相关内容。</p>
+<p>canvas 起初是空白的。为了展示，首先脚本需要找到渲染上下文，然后在它的上面绘制。canvas元素有一个叫做 <code>getContext()</code>的方法，这个方法是用来获得渲染上下文和它的绘画功能。<code>getContext()</code>接受一个参数，即上下文的类型。</p>
+<p>但是要注意识别某些无法使用<code>canvas</code>的情况，这样才更加鲁棒！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">'canvas'</span>);</span><br><span class="line"><span class="keyword">if</span> (canvas.getContext) &#123;</span><br><span class="line">	<span class="keyword">const</span> ctx = canvas.getContext(<span class="string">'2d'</span>);</span><br><span class="line">  <span class="comment">// 鲁棒的代码……</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// 无法识别情况……</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="绘制"><a href="#绘制" class="headerlink" title="绘制"></a>绘制</h2><p>不同于 <code>SVG</code>，<code>canvas</code>只支持两种形式的图形绘制：矩形和路径（由一系列点连成的线段）。所有其他类型的图形都是通过一条或者多条路径组合而成的。不过，我们拥有众多路径生成的方法让复杂图形的绘制成为了可能。</p>
+<blockquote>
+<p>Tips: SVG的入门指南也有更新，在我的主页里面就可以看见。</p>
+</blockquote>
+<h3 id="绘制矩形"><a href="#绘制矩形" class="headerlink" title="绘制矩形"></a>绘制矩形</h3><p>canvas 提供了三种方法绘制矩形：</p>
+<ul>
+<li><p><code>fillRect(x, y, width, height)</code></p>
+<p>绘制一个填充的矩形</p>
+</li>
+<li><p><code>strokeRect(x, y, width, height)</code></p>
+<p>绘制一个矩形的边框</p>
+</li>
+<li><p><code>clearRect(x, y, width, height)</code></p>
+<p>清除指定矩形区域，让清除部分完全透明。</p>
+</li>
+</ul>
+<p>上面提供的方法之中每一个都包含了相同的参数。x 与 y 指定了在 canvas 画布上所绘制的矩形的左上角（相对于原点）的坐标。width 和 height 设置矩形的尺寸。</p>
+<p>纸上得来终觉浅，绝知此事要躬行！撸起袖子，开敲！</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"application/javascript"</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="function"><span class="keyword">function</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas"</span>);</span></span><br><span class="line">      if (canvas.getContext) &#123;</span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> ctx = canvas.getContext(<span class="string">"2d"</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">        ctx.fillStyle = <span class="string">"rgb(200,0,0)"</span>;</span></span><br><span class="line">        ctx.fillRect (10, 10, 55, 50);</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        ctx.fillStyle = <span class="string">"rgba(0, 0, 200, 0.5)"</span>;</span></span><br><span class="line">        ctx.fillRect (30, 30, 55, 50);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">body</span> <span class="attr">onload</span>=<span class="string">"draw();"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"canvas"</span> <span class="attr">width</span>=<span class="string">"150"</span> <span class="attr">height</span>=<span class="string">"150"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/" class="lazyload" data-src="/image/canvas/1.png"  alt="1"></p>
+<p>细心的人已经发现矩形很模糊，而且没发现的还沉浸在自己成功的喜悦之中。</p>
+<h3 id="高清的Canvas"><a href="#高清的Canvas" class="headerlink" title="高清的Canvas"></a>高清的Canvas</h3><p>那为什么会模糊？</p>
+<p>主要是现在都是高清屏，就是分辨率上来了，画图的时候不是这样画的，只是等比例放大，所以模糊。</p>
+<p>那么怎么办？把画布也同步放大！</p>
+<p>加入这样的一个函数，传入canvas的上下文进去，让他来改造。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hdCanvas</span>(<span class="params">canvas, ratio</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> rect = canvas.getBoundingClientRect();</span><br><span class="line">  canvas.width = rect.width * ratio;</span><br><span class="line">  canvas.height = rect.height * ratio;</span><br><span class="line">  canvas.style.width = rect.width + <span class="string">"px"</span></span><br><span class="line">  canvas.style.height = rect.height + <span class="string">"px"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改之后就高清多啦~</p>
+<p><a href="https://github.com/DerrickTel/study-demo/blob/main/canvas" target="_blank" rel="noopener">矩形源码</a></p>
+<h3 id="绘制路径"><a href="#绘制路径" class="headerlink" title="绘制路径"></a>绘制路径</h3><p>绘制路径大致有下面4个步骤</p>
+<ol>
+<li>首先，你需要创建路径起始点。</li>
+<li>然后你使用画图命令去画出路径。</li>
+<li>之后你把路径封闭。</li>
+<li>一旦路径生成，你就能通过描边或填充路径区域来渲染图形。</li>
+</ol>
+<p>以下是所要用到的函数：</p>
+<ul>
+<li><p><code>beginPath()</code></p>
+<p>新建一条路径，生成之后，图形绘制命令被指向到路径上生成路径。</p>
+</li>
+<li><p><code>closePath()</code></p>
+<p>闭合路径之后图形绘制命令又重新指向到上下文中。</p>
+</li>
+<li><p><code>stroke()</code></p>
+<p>通过线条来绘制图形轮廓。</p>
+</li>
+<li><p><code>fill()</code></p>
+<p>通过填充路径的内容区域生成实心的图形。</p>
+</li>
+</ul>
+<h3 id="画一个三角形"><a href="#画一个三角形" class="headerlink" title="画一个三角形"></a>画一个三角形</h3><p>三角形就是3条简单的直线。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">draw</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">const</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas"</span>);</span><br><span class="line">      <span class="keyword">if</span> (canvas.getContext) &#123;</span><br><span class="line">        <span class="keyword">const</span> ctx = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        <span class="keyword">const</span> ratio = <span class="built_in">window</span>.devicePixelRatio || <span class="number">1</span></span><br><span class="line">        hdCanvas(canvas, ratio)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 放大倍数</span></span><br><span class="line">        ctx.scale(ratio, ratio);</span><br><span class="line"></span><br><span class="line">        ctx.lineWidth = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 空心 - 没有 closePath</span></span><br><span class="line">        ctx.beginPath();</span><br><span class="line">        ctx.moveTo(<span class="number">75</span>, <span class="number">50</span>);</span><br><span class="line">        ctx.lineTo(<span class="number">100</span>, <span class="number">75</span>);</span><br><span class="line">        ctx.lineTo(<span class="number">100</span>, <span class="number">25</span>);</span><br><span class="line">        ctx.lineTo(<span class="number">75</span>, <span class="number">50</span>);</span><br><span class="line">        <span class="comment">// ctx.closePath();</span></span><br><span class="line">        ctx.stroke();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 空心 - closePath</span></span><br><span class="line">        ctx.beginPath();</span><br><span class="line">        ctx.moveTo(<span class="number">275</span>, <span class="number">50</span>);</span><br><span class="line">        ctx.lineTo(<span class="number">300</span>, <span class="number">75</span>);</span><br><span class="line">        ctx.lineTo(<span class="number">300</span>, <span class="number">25</span>);</span><br><span class="line">        <span class="comment">// ctx.lineTo(275, 50);</span></span><br><span class="line">        <span class="comment">// 有 closePath会自动首尾相连</span></span><br><span class="line">        ctx.closePath();</span><br><span class="line">        ctx.stroke();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 实心</span></span><br><span class="line">        ctx.beginPath();</span><br><span class="line">        ctx.moveTo(<span class="number">175</span>, <span class="number">50</span>);</span><br><span class="line">        ctx.lineTo(<span class="number">200</span>, <span class="number">75</span>);</span><br><span class="line">        ctx.lineTo(<span class="number">200</span>, <span class="number">25</span>);</span><br><span class="line">        ctx.closePath();</span><br><span class="line">        ctx.fill();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/" class="lazyload" data-src="/image/canvas/2.png"  alt="1"></p>
+<p>可以很明显的看到，没有<code>closePath</code>他是没有闭合的。有<code>closePath</code>哪怕没有回到起点，他也会自动的首尾相连。</p>
+<p>上述的四个函数都可以在这个demo中学习到。</p>
+<h3 id="画一个圆弧"><a href="#画一个圆弧" class="headerlink" title="画一个圆弧"></a>画一个圆弧</h3><p>绘制圆弧或者圆，我们使用<code>arc()</code>方法。当然可以使用<code>arcTo()</code>，不过这个不太好理解，也不常用就不介绍了，着重介绍<code>arc()</code>。</p>
+<p><code>arc(x, y, radius, startAngle, endAngle, anticlockwise)</code></p>
+<p>画一个以（x,y）为圆心的以 radius 为半径的圆弧（圆），从 startAngle 开始到 endAngle 结束，按照 anticlockwise 给定的方向（默认为顺时针）来生成。</p>
+<ul>
+<li>x -&gt; 圆弧中心（圆心）的 x 轴坐标。</li>
+<li>y -&gt; 圆弧中心（圆心）的 y 轴坐标。</li>
+<li>radius -&gt; 圆弧的半径。</li>
+<li>startAngle -&gt; 圆弧的起始点，x 轴方向开始计算，单位以弧度表示。</li>
+<li>endAngle -&gt; 圆弧的终点，单位以弧度表示。</li>
+<li>anticlockwise -&gt; 默认为 <code>false</code>可选的<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Boolean" target="_blank" rel="noopener"><code>Boolean</code></a>值，如果为 <code>true</code>，逆时针绘制圆弧，反之，顺时针绘制。</li>
+</ul>
+<blockquote>
+<p><code>arc()</code> 函数中表示角的单位是弧度，不是角度。角度与弧度的 js 表达式：</p>
+<p>弧度=(Math.PI/180)*角度。</p>
+</blockquote>
+<p>具体的起点，终点坐标可以看下图</p>
+<p><img src="/" class="lazyload" data-src="/image/canvas/3.gif"  alt="1"></p>
+<p>具体看一个demo</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">draw</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas"</span>);</span><br><span class="line">  <span class="keyword">if</span> (canvas.getContext) &#123;</span><br><span class="line">    <span class="keyword">const</span> ctx = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">    <span class="keyword">const</span> ratio = <span class="built_in">window</span>.devicePixelRatio || <span class="number">1</span></span><br><span class="line">    hdCanvas(canvas, ratio)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 放大倍数</span></span><br><span class="line">    ctx.scale(ratio, ratio);</span><br><span class="line"></span><br><span class="line">    ctx.beginPath();</span><br><span class="line">    ctx.arc(<span class="number">100</span>, <span class="number">50</span>, <span class="number">20</span>, <span class="number">0.5</span> * <span class="built_in">Math</span>.PI, <span class="number">2</span> * <span class="built_in">Math</span>.PI);</span><br><span class="line">    ctx.stroke();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 不加这句话,上个圆的终点会与当前这个圆的期待你相连, 不信可以试试</span></span><br><span class="line"><span class="comment">         * 也可以用 moveTo 到圆的起点, 这里偷懒了, 不太规范</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">    ctx.beginPath();</span><br><span class="line">    ctx.arc(<span class="number">200</span>, <span class="number">50</span>, <span class="number">20</span>, <span class="number">0.5</span> * <span class="built_in">Math</span>.PI, <span class="number">4</span> * <span class="built_in">Math</span>.PI);</span><br><span class="line">    ctx.stroke();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/" class="lazyload" data-src="/image/canvas/4.png"  alt="1"></p>
+<p>我们可以发现，起点与终点之间的值超过了2就会完整的一个圆出现。</p>
+<p>为什么是2？</p>
+<p>九漏鱼？？？？？？？？？？</p>
+<p>圆的周长等于什么？ 2 * π * R</p>
+<h4 id="自我学习"><a href="#自我学习" class="headerlink" title="自我学习"></a>自我学习</h4><p>马上画一个笑脸。</p>
+<p><img src="/" class="lazyload" data-src="/image/canvas/5.png"  alt="1"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ctx.beginPath();</span><br><span class="line">ctx.arc(<span class="number">75</span>, <span class="number">75</span>, <span class="number">50</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">true</span>); <span class="comment">// 绘制</span></span><br><span class="line">ctx.moveTo(<span class="number">110</span>, <span class="number">75</span>);</span><br><span class="line">ctx.arc(<span class="number">75</span>, <span class="number">75</span>, <span class="number">35</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">false</span>);   <span class="comment">// 口 (顺时针)</span></span><br><span class="line">ctx.moveTo(<span class="number">65</span>, <span class="number">65</span>);</span><br><span class="line">ctx.arc(<span class="number">60</span>, <span class="number">65</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">true</span>);  <span class="comment">// 左眼</span></span><br><span class="line">ctx.moveTo(<span class="number">95</span>, <span class="number">65</span>);</span><br><span class="line">ctx.arc(<span class="number">90</span>, <span class="number">65</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">true</span>);  <span class="comment">// 右眼</span></span><br><span class="line">ctx.stroke();</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/DerrickTel/study-demo/blob/main/canvas" target="_blank" rel="noopener">源码</a></p>
+<h3 id="二次贝塞尔曲线和三次贝塞尔曲线"><a href="#二次贝塞尔曲线和三次贝塞尔曲线" class="headerlink" title="二次贝塞尔曲线和三次贝塞尔曲线"></a>二次贝塞尔曲线和三次贝塞尔曲线</h3><ul>
+<li><code>quadraticCurveTo(cp1x, cp1y, x, y)</code></li>
+</ul>
+<p>​        绘制二次贝塞尔曲线，<code>cp1x,cp1y</code> 为一个控制点，<code>x,y</code> 为结束点。</p>
+<ul>
+<li><code>bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)</code></li>
+</ul>
+<p>​        绘制三次贝塞尔曲线，<code>cp1x,cp1y</code>为控制点一，<code>cp2x,cp2y</code>为控制点二，<code>x,y</code>为结束点。</p>
+<p>这里就不展开了。这里面很复杂，课后学习！！！</p>
+<h2 id="色彩与样式"><a href="#色彩与样式" class="headerlink" title="色彩与样式"></a>色彩与样式</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这些 fillStyle 的值均为 '橙色'</span></span><br><span class="line">ctx.fillStyle = <span class="string">"orange"</span>;</span><br><span class="line">ctx.fillStyle = <span class="string">"#FFA500"</span>;</span><br><span class="line">ctx.fillStyle = <span class="string">"rgb(255,165,0)"</span>;</span><br><span class="line">ctx.fillStyle = <span class="string">"rgba(255,165,0,1)"</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="色彩"><a href="#色彩" class="headerlink" title="色彩"></a>色彩</h3><ul>
+<li><code>fillStyle = color</code> -&gt; 设置图形的填充颜色。</li>
+<li><code>strokeStyle = color</code> -&gt; 设置图形轮廓的颜色。</li>
+</ul>
+<blockquote>
+<p>color指上述的各种实现方式</p>
+</blockquote>
+<h3 id="透明度"><a href="#透明度" class="headerlink" title="透明度"></a>透明度</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctx.globalAlpha = <span class="number">0.5</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这个属性影响到 canvas 里所有图形的透明度，有效的值范围是 0.0（完全透明）到 1.0（完全不透明），默认是 1.0。</p>
+<p>因为 <code>strokeStyle</code> 和 <code>fillStyle</code> 属性接受符合 CSS 3 规范的颜色值，那我们可以用下面的写法来设置具有透明度的颜色。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 指定透明颜色，用于描边和填充样式</span></span><br><span class="line">ctx.strokeStyle = <span class="string">"rgba(255,0,0,0.5)"</span>;</span><br><span class="line">ctx.fillStyle = <span class="string">"rgba(255,0,0,0.5)"</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="线型"><a href="#线型" class="headerlink" title="线型"></a>线型</h3><p>可以通过一系列属性来设置线的样式。</p>
+<ul>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/lineWidth" target="_blank" rel="noopener"><code>lineWidth = value</code></a></p>
+<p>设置线条宽度。</p>
+</li>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/lineCap" target="_blank" rel="noopener"><code>lineCap = type</code></a></p>
+<p>设置线条末端样式。</p>
+<p>它可以为下面的三种的其中之一：<code>butt</code>，<code>round</code> 和 <code>square</code>。默认是 <code>butt</code>。</p>
+</li>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/lineJoin" target="_blank" rel="noopener"><code>lineJoin = type</code></a></p>
+<p>设定线条与线条间接合处的样式。</p>
+<p>它可以是这三种之一：<code>round</code>, <code>bevel</code> 和 <code>miter</code>。默认是 <code>miter</code>。</p>
+</li>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/miterLimit" target="_blank" rel="noopener"><code>miterLimit = value</code></a></p>
+<p>限制当两条线相交时交接处最大长度；所谓交接处长度（斜接长度）是指线条交接处内角顶点到外角顶点的长度。</p>
+</li>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/getLineDash" target="_blank" rel="noopener"><code>getLineDash()</code></a></p>
+<p>返回一个包含当前虚线样式，长度为非负偶数的数组。</p>
+</li>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setLineDash" target="_blank" rel="noopener"><code>setLineDash(segments)</code></a></p>
+<p>设置当前虚线样式。</p>
+</li>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/lineDashOffset" target="_blank" rel="noopener"><code>lineDashOffset = value</code></a></p>
+<p>设置虚线样式的起始偏移量。</p>
+</li>
+</ul>
+<p>通过以下的样例可能会更加容易理解。</p>
+<p>把所有的属性都搞一遍。</p>
+<p><img src="/" class="lazyload" data-src="/image/canvas/6.png"  alt="1"></p>
+<p><a href="https://github.com/DerrickTel/study-demo/tree/main/canvas" target="_blank" rel="noopener">源码</a></p>
+<h3 id="渐变"><a href="#渐变" class="headerlink" title="渐变"></a>渐变</h3><p>这个和CSS的一样，就不展开了</p>
+<ul>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/createLinearGradient" target="_blank" rel="noopener"><code>createLinearGradient(x1, y1, x2, y2)</code></a></p>
+<p>createLinearGradient 方法接受 4 个参数，表示渐变的起点 (x1,y1) 与终点 (x2,y2)。</p>
+</li>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/createRadialGradient" target="_blank" rel="noopener"><code>createRadialGradient(x1, y1, r1, x2, y2, r2)</code></a></p>
+<p>createRadialGradient 方法接受 6 个参数，前三个定义一个以 (x1,y1) 为原点，半径为 r1 的圆，后三个参数则定义另一个以 (x2,y2) 为原点，半径为 r2 的圆。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var lineargradient &#x3D; ctx.createLinearGradient(0,0,150,150);</span><br><span class="line">var radialgradient &#x3D; ctx.createRadialGradient(75,75,0,75,75,100);</span><br></pre></td></tr></table></figure>
+
+<p>Copy to Clipboard</p>
+<p>创建出 <code>canvasGradient</code> 对象后，我们就可以用 <code>addColorStop</code> 方法给它上色了。</p>
+<ul>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasGradient/addColorStop" target="_blank" rel="noopener"><code>gradient.addColorStop(position, color)</code></a></p>
+<p>addColorStop 方法接受 2 个参数，<code>position</code> 参数必须是一个 0.0 与 1.0 之间的数值，表示渐变中颜色所在的相对位置。例如，0.5 表示颜色会出现在正中间。<code>color</code> 参数必须是一个有效的 CSS 颜色值（如 #FFF，rgba(0,0,0,1)，等等）。</p>
+</li>
+</ul>
+<h3 id="图案样式"><a href="#图案样式" class="headerlink" title="图案样式"></a>图案样式</h3><p>这个也和CSS的一样，也不展开了</p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/createPattern" target="_blank" rel="noopener"><code>createPattern(image, type)</code></a></p>
+<p>该方法接受两个参数。Image 可以是一个 <code>Image</code> 对象的引用，或者另一个 canvas 对象。<code>Type</code> 必须是下面的字符串值之一：<code>repeat</code>，<code>repeat-x</code>，<code>repeat-y</code> 和 <code>no-repeat</code>。</p>
+<h3 id="阴影"><a href="#阴影" class="headerlink" title="阴影"></a>阴影</h3><ul>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/shadowOffsetX" target="_blank" rel="noopener"><code>shadowOffsetX = float</code></a></p>
+<p><code>shadowOffsetX</code> 和 <code>shadowOffsetY</code> 用来设定阴影在 X 和 Y 轴的延伸距离，它们是不受变换矩阵所影响的。负值表示阴影会往上或左延伸，正值则表示会往下或右延伸，它们默认都为 <code>0</code>。</p>
+</li>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/shadowOffsetY" target="_blank" rel="noopener"><code>shadowOffsetY = float</code></a></p>
+<p>shadowOffsetX 和 <code>shadowOffsetY</code> 用来设定阴影在 X 和 Y 轴的延伸距离，它们是不受变换矩阵所影响的。负值表示阴影会往上或左延伸，正值则表示会往下或右延伸，它们默认都为 <code>0</code>。</p>
+</li>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/shadowBlur" target="_blank" rel="noopener"><code>shadowBlur = float</code></a></p>
+<p>shadowBlur 用于设定阴影的模糊程度，其数值并不跟像素数量挂钩，也不受变换矩阵的影响，默认为 <code>0</code>。</p>
+</li>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/shadowColor" target="_blank" rel="noopener"><code>shadowColor = color</code></a></p>
+<p>shadowColor 是标准的 CSS 颜色值，用于设定阴影颜色效果，默认是全透明的黑色。</p>
+</li>
+</ul>
+<h3 id="填充规则"><a href="#填充规则" class="headerlink" title="填充规则"></a>填充规则</h3><p>当我们用到 <code>fill</code>（或者 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/clip" target="_blank" rel="noopener"><code>clip</code></a>和<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/isPointInPath" target="_blank" rel="noopener"><code>isPointinPath</code></a> ）你可以选择一个填充规则，该填充规则根据某处在路径的外面或者里面来决定该处是否被填充，这对于自己与自己路径相交或者路径被嵌套的时候是有用的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">draw</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> ctx = <span class="built_in">document</span>.getElementById(<span class="string">'canvas'</span>).getContext(<span class="string">'2d'</span>);</span><br><span class="line">  ctx.beginPath();</span><br><span class="line">  ctx.arc(<span class="number">50</span>, <span class="number">50</span>, <span class="number">30</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI*<span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">  ctx.arc(<span class="number">50</span>, <span class="number">50</span>, <span class="number">15</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI*<span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">  ctx.fill(<span class="string">"evenodd"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个可以大家自己试试是什么样子的。</p>
+<h2 id="文本"><a href="#文本" class="headerlink" title="文本"></a>文本</h2><p>文本绘制也算是蛮重要的一章，可以绘制各式各样的图案，否则的话，按照<code>path</code>去一一绘画，会耗费大量的时间</p>
+<h3 id="绘制文本"><a href="#绘制文本" class="headerlink" title="绘制文本"></a>绘制文本</h3><p><code>fillText(text, x, y [, maxWidth\])</code></p>
+<p>在指定的 (x,y) 位置绘制指定的<code>实心</code>文本，绘制的最大宽度是可选的。</p>
+<p><code>strokeText(text, x, y [, maxWidth\])</code></p>
+<p>在指定的 (x,y) 位置绘制指定的<code>空心</code>文本，绘制的最大宽度是可选的。</p>
+<h3 id="有样式的文本"><a href="#有样式的文本" class="headerlink" title="有样式的文本"></a>有样式的文本</h3><ul>
+<li><code>font = &#39;10px sans-serif&#39;</code><ul>
+<li>当前我们用来绘制文本的样式。这个字符串使用和 <code>CSS font</code>属性相同的语法。默认的字体是 <code>10px sans-serif</code>。</li>
+</ul>
+</li>
+<li><code>textAlign = &#39;value&#39;</code><ul>
+<li>文本对齐选项。可选的值包括：<code>start</code>, <code>end</code>, <code>left</code>, <code>right</code> or <code>center</code>. 默认值是 <code>start</code>。</li>
+</ul>
+</li>
+<li><code>textBaseline = &#39;value&#39;</code><ul>
+<li>基线对齐选项。可选的值包括：<code>top</code>, <code>hanging</code>, <code>middle</code>, <code>alphabetic</code>, <code>ideographic</code>, <code>bottom</code>。默认值是 <code>alphabetic</code>。</li>
+</ul>
+</li>
+<li><code>direction = &#39;value&#39;</code><ul>
+<li>文本方向。可能的值包括：<code>ltr</code>, <code>rtl</code>, <code>inherit</code>。默认值是 <code>inherit</code>。</li>
+</ul>
+</li>
+</ul>
+<p>如果你之前使用过 CSS，那么这些选项你会很熟悉。</p>
+<h3 id="预测文本宽度"><a href="#预测文本宽度" class="headerlink" title="预测文本宽度"></a>预测文本宽度</h3><p>当你需要获得更多的文本细节时，下面的方法可以给你测量文本的方法。</p>
+<ul>
+<li><p><code>measureText()</code></p>
+<p>将返回一个 <code>TextMetrics</code>对象的宽度、所在像素，这些体现文本特性的属性。</p>
+</li>
+</ul>
+<p>下面的代码段将展示如何测量文本来获得它的宽度：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">draw</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> ctx = <span class="built_in">document</span>.getElementById(<span class="string">'canvas'</span>).getContext(<span class="string">'2d'</span>);</span><br><span class="line">  <span class="keyword">var</span> text = ctx.measureText(<span class="string">"foo"</span>); <span class="comment">// TextMetrics object</span></span><br><span class="line">  text.width; <span class="comment">// 16;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/" class="lazyload" data-src="/image/canvas/7.png"  alt="1"></p>
+<p>上图<a href="https://github.com/DerrickTel/study-demo/tree/main/canvas" target="_blank" rel="noopener">源码</a></p>
+<h2 id="图像"><a href="#图像" class="headerlink" title="图像"></a>图像</h2><p>canvas中还有一项强大的功能就是他的图像处理能力，并不局限于静态图片，可以做到动态图片，甚至是游戏画面等等。这个图片的来源也不至于常见的JEPG、PNG、GIF等，甚至可以是video的某一帧，甚至是其他的canvas作为图片源。</p>
+<p>使用图片大致可以分为两步</p>
+<ul>
+<li>获得一个HTML对象（可以是URL，图片，视频，其他canvas）</li>
+<li>使用<code>drawImage()</code>函数将获取的内容绘制在canvas上</li>
+</ul>
+<h3 id="图片源"><a href="#图片源" class="headerlink" title="图片源"></a>图片源</h3><ol>
+<li>HTMLImageElement -&gt; <code>&lt;img&gt;</code></li>
+<li>HTMLVideoElement -&gt; <code>&lt;video&gt;</code></li>
+<li>HTMLCanvasElement -&gt; <code>&lt;canvas&gt;</code></li>
+<li>ImageBitmap -&gt; 位图资源，这里就不展开介绍了。因为浏览器的支持不是很好。</li>
+</ol>
+<h4 id="HTMLImageElement"><a href="#HTMLImageElement" class="headerlink" title="HTMLImageElement"></a>HTMLImageElement</h4><p>第一种就是直接拿到<code>&lt;img src=&quot;&quot; id=&quot;img&quot; /&gt;</code></p>
+<p>第二种是自己创建一个元素，使用 <code>new Image()</code> 或 <code>document.createElement(&quot;img&quot;)</code> 方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> c = <span class="built_in">document</span>.getElementById(<span class="string">"canvas-1"</span>);</span><br><span class="line"><span class="keyword">const</span> ctx = c.getContext(<span class="string">"2d"</span>);</span><br><span class="line"><span class="keyword">const</span> img = <span class="built_in">document</span>.getElementById(<span class="string">"img1"</span>);</span><br><span class="line"><span class="keyword">const</span> img2 = <span class="keyword">new</span> Image();</span><br><span class="line">img2.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    ctx.drawImage(<span class="keyword">this</span>, <span class="number">10</span>, <span class="number">10</span>);</span><br><span class="line">&#125;</span><br><span class="line">img2.src = <span class="string">"https://www.twle.cn/static/i/meimei_160x160.png"</span>;</span><br><span class="line">ctx.drawImage(img, <span class="number">10</span>, <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="HTMLVideoElement"><a href="#HTMLVideoElement" class="headerlink" title="HTMLVideoElement"></a>HTMLVideoElement</h4><p>在<code>drawImage</code>里的<code>video</code>并不是拿到什么数据流，而且拿的那一瞬间的一帧图案。</p>
+<p>这里给一个简单的小demo后面也有源码。大家可以运行一下自己试试看。</p>
+<p><img src="/" class="lazyload" data-src="/image/canvas/8.gif"  alt="1"></p>
+<blockquote>
+<p> 在线代码: <a href="https://codesandbox.io/s/heuristic-feather-qnwdcs?file=/index.html" target="_blank" rel="noopener">https://codesandbox.io/s/heuristic-feather-qnwdcs?file=/index.html</a></p>
+</blockquote>
+<h4 id="HTMLCanvasElement"><a href="#HTMLCanvasElement" class="headerlink" title="HTMLCanvasElement"></a>HTMLCanvasElement</h4><p>这里很简单。就是传入别的<code>canvas</code>的<code>context</code>就好。直接看个例子就可以悟道了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> canvas1  = <span class="built_in">document</span>.createElement(<span class="string">"canvas1"</span>);</span><br><span class="line"><span class="keyword">const</span> ctx1 = canvas1.getContext(<span class="string">"2d"</span>);</span><br><span class="line">ctx1.fillText(<span class="string">"canvas"</span>）</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> canvas2  = <span class="built_in">document</span>.createElement(<span class="string">"canvas1"</span>);</span><br><span class="line"><span class="keyword">const</span> ctx2 = canvas1.getContext(<span class="string">"2d"</span>);</span><br><span class="line">canvas2.drawImage(canvas1, <span class="number">10</span>, <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<p>就这么简单，直接将<code>canvas1</code>作为<code>drawImage</code>的第一个参数就行</p>
+<h3 id="drwaImage的变化"><a href="#drwaImage的变化" class="headerlink" title="drwaImage的变化"></a>drwaImage的变化</h3><p><code>drawImage</code> 方法的又一变种是增加了两个用于控制图像在 canvas 中缩放的参数。</p>
+<ul>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/drawImage" target="_blank" rel="noopener"><code>drawImage(image, x, y, width, height)</code></a></p>
+<p>这个方法多了 2 个参数：<code>width</code> 和 <code>height，</code>这两个参数用来控制 当向 canvas 画入时应该缩放的大小</p>
+</li>
+</ul>
+<p><code>drawImage</code> 方法的第三个也是最后一个变种有 8 个新参数，用于控制做切片显示的。</p>
+<ul>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/drawImage" target="_blank" rel="noopener"><code>drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)</code></a></p>
+<p>第一个参数和其他的是相同的，都是一个图像或者另一个 canvas 的引用。其他 8 个参数最好是参照右边的图解，前 4 个是定义图像源的切片位置和大小，后 4 个则是定义切片的目标显示位置和大小。</p>
+</li>
+</ul>
+<h2 id="状态恢复与保存"><a href="#状态恢复与保存" class="headerlink" title="状态恢复与保存"></a>状态恢复与保存</h2><p>在了解变形之前，我先介绍两个在你开始绘制复杂图形时必不可少的方法。</p>
+<ul>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/save" target="_blank" rel="noopener"><code>save()</code></a></p>
+<p>保存画布 (canvas) 的所有状态</p>
+</li>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/restore" target="_blank" rel="noopener"><code>restore()</code></a></p>
+<p>save 和 restore 方法是用来保存和恢复 canvas 状态的，都没有参数。Canvas 的状态就是当前画面应用的所有样式和变形的一个快照。</p>
+</li>
+</ul>
+<p>Canvas 状态存储在栈中，每当<code>save()</code>方法被调用后，当前的状态就被推送到栈中保存。一个绘画状态包括：</p>
+<ul>
+<li><p>当前应用的变形（即移动，旋转和缩放，见下）</p>
+</li>
+<li><p>以及下面这些属性：<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/strokeStyle" target="_blank" rel="noopener"><code>strokeStyle</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/fillStyle" target="_blank" rel="noopener"><code>fillStyle</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/globalAlpha" target="_blank" rel="noopener"><code>globalAlpha</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/lineWidth" target="_blank" rel="noopener"><code>lineWidth</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/lineCap" target="_blank" rel="noopener"><code>lineCap</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/lineJoin" target="_blank" rel="noopener"><code>lineJoin</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/miterLimit" target="_blank" rel="noopener"><code>miterLimit</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/lineDashOffset" target="_blank" rel="noopener"><code>lineDashOffset</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/shadowOffsetX" target="_blank" rel="noopener"><code>shadowOffsetX</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/shadowOffsetY" target="_blank" rel="noopener"><code>shadowOffsetY</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/shadowBlur" target="_blank" rel="noopener"><code>shadowBlur</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/shadowColor" target="_blank" rel="noopener"><code>shadowColor</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation" target="_blank" rel="noopener"><code>globalCompositeOperation</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/font" target="_blank" rel="noopener"><code>font</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/textAlign" target="_blank" rel="noopener"><code>textAlign</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/textBaseline" target="_blank" rel="noopener"><code>textBaseline</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/direction" target="_blank" rel="noopener"><code>direction</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled" target="_blank" rel="noopener"><code>imageSmoothingEnabled</code></a></p>
+</li>
+</ul>
+<p>你可以调用任意多次 <code>save</code>方法。每一次调用 <code>restore</code> 方法，上一个保存的状态就从栈中弹出，所有设定都恢复。</p>
+<p>我们尝试用这个连续矩形的例子来描述 canvas 的状态栈是如何工作的。</p>
+<p>第一步是用默认设置画一个大四方形，然后保存一下状态。改变填充颜色画第二个小一点的蓝色四方形，然后再保存一下状态。再次改变填充颜色绘制更小一点的半透明的白色四方形。</p>
+<p>到目前为止所做的动作和前面章节的都很类似。不过一旦我们调用 <code>restore</code>，状态栈中最后的状态会弹出，并恢复所有设置。如果不是之前用 <code>save</code> 保存了状态，那么我们就需要手动改变设置来回到前一个状态，这个对于两三个属性的时候还是适用的，一旦多了，我们的代码将会猛涨。</p>
+<p>当第二次调用 <code>restore</code> 时，已经恢复到最初的状态，因此最后是再一次绘制出一个黑色的四方形。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ctx.fillRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">150</span>, <span class="number">150</span>);   <span class="comment">// 使用默认设置绘制一个矩形</span></span><br><span class="line">ctx.save();                  <span class="comment">// 保存默认状态</span></span><br><span class="line"></span><br><span class="line">ctx.fillStyle = <span class="string">'#09F'</span>       <span class="comment">// 在原有配置基础上对颜色做改变</span></span><br><span class="line">ctx.fillRect(<span class="number">15</span>, <span class="number">15</span>, <span class="number">120</span>, <span class="number">120</span>); <span class="comment">// 使用新的设置绘制一个矩形</span></span><br><span class="line"></span><br><span class="line">ctx.save();                  <span class="comment">// 保存当前状态</span></span><br><span class="line">ctx.fillStyle = <span class="string">'#FFF'</span>       <span class="comment">// 再次改变颜色配置</span></span><br><span class="line">ctx.globalAlpha = <span class="number">0.5</span>;</span><br><span class="line">ctx.fillRect(<span class="number">30</span>, <span class="number">30</span>, <span class="number">90</span>, <span class="number">90</span>);   <span class="comment">// 使用新的配置绘制一个矩形</span></span><br><span class="line"></span><br><span class="line">ctx.restore();               <span class="comment">// 重新加载之前的颜色状态</span></span><br><span class="line">ctx.fillRect(<span class="number">45</span>, <span class="number">45</span>, <span class="number">60</span>, <span class="number">60</span>);   <span class="comment">// 使用上一次的配置绘制一个矩形</span></span><br><span class="line"></span><br><span class="line">ctx.restore();               <span class="comment">// 加载默认颜色配置</span></span><br><span class="line">ctx.fillRect(<span class="number">60</span>, <span class="number">60</span>, <span class="number">30</span>, <span class="number">30</span>);   <span class="comment">// 使用加载的配置绘制一个矩形</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/" class="lazyload" data-src="/image/canvas/9.png"  alt="1"></p>
+<p><a href="https://github.com/DerrickTel/study-demo/tree/main/canvas" target="_blank" rel="noopener">源码</a></p>
+<h2 id="变形"><a href="#变形" class="headerlink" title="变形"></a>变形</h2><p>这里面的都和css的一样，就不多介绍了。</p>
+<ul>
+<li><p><code>translate(x, y)</code></p>
+<p>x <em>是左右偏移量，</em>y 是上下偏移量，</p>
+</li>
+<li><p><code>rotate(angle)</code></p>
+<p>这个方法只接受一个参数：旋转的角度 (angle)，它是顺时针方向的，以弧度为单位的值。</p>
+</li>
+</ul>
+<p>​        旋转的中心点始终是 canvas 的原点，如果要改变它，我们需要用到 <code>translate</code>方法。</p>
+<ul>
+<li><p><strong><code>scale(x, y)</code></strong></p>
+<p><code>scale</code>方法可以缩放画布的水平和垂直的单位。两个参数都是实数，可以为负数，x 为水平缩放因子，y 为垂直缩放因子，如果比 1 小，会缩小图形，如果比 1 大会放大图形。默认值为 1，为实际大小。</p>
+</li>
+</ul>
+<ul>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/transform" target="_blank" rel="noopener"><code>transform(a, b, c, d, e, f)</code></a></li>
+</ul>
+<p>​        这个方法是将当前的变形矩阵乘上一个基于自身参数的矩阵</p>
+<p>​        这个函数的参数各自代表如下：</p>
+<ol>
+<li><code>a (m11)</code>水平方向的缩放</li>
+<li><code>b(m12)</code>竖直方向的倾斜偏移</li>
+<li><code>c(m21)</code>水平方向的倾斜偏移</li>
+<li><code>d(m22)</code>竖直方向的缩放</li>
+<li><code>e(dx)</code>水平方向的移动</li>
+<li><code>f(dy)</code>竖直方向的移动</li>
+</ol>
+<ul>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform" target="_blank" rel="noopener"><code>setTransform(a, b, c, d, e, f)</code></a></p>
+<p>这个方法会将当前的变形矩阵重置为单位矩阵，然后用相同的参数调用 <code>transform</code>方法。如果任意一个参数是无限大，那么变形矩阵也必须被标记为无限大，否则会抛出异常。从根本上来说，该方法是取消了当前变形，然后设置为指定的变形，一步完成。</p>
+</li>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/resetTransform" target="_blank" rel="noopener"><code>resetTransform()</code></a></p>
+<p>重置当前变形为单位矩阵，它和调用以下语句是一样的：<code>ctx.setTransform(1, 0, 0, 1, 0, 0);</code></p>
+</li>
+</ul>
+<p><img src="/" class="lazyload" data-src="/image/canvas/10.png"  alt="1"></p>
+<p><a href="https://github.com/DerrickTel/study-demo/tree/main/canvas" target="_blank" rel="noopener">源码</a></p>
+<h2 id="图像混合"><a href="#图像混合" class="headerlink" title="图像混合"></a>图像混合</h2><p><code>globalCompositeOperation = type</code></p>
+<p>type有26种。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[ <span class="string">'source-over'</span>,<span class="string">'source-in'</span>,<span class="string">'source-out'</span>,<span class="string">'source-atop'</span>,</span><br><span class="line"> <span class="string">'destination-over'</span>,<span class="string">'destination-in'</span>,<span class="string">'destination-out'</span>,<span class="string">'destination-atop'</span>,</span><br><span class="line"> <span class="string">'lighter'</span>, <span class="string">'copy'</span>,<span class="string">'xor'</span>, <span class="string">'multiply'</span>, <span class="string">'screen'</span>, <span class="string">'overlay'</span>, <span class="string">'darken'</span>,</span><br><span class="line"> <span class="string">'lighten'</span>, <span class="string">'color-dodge'</span>, <span class="string">'color-burn'</span>, <span class="string">'hard-light'</span>, <span class="string">'soft-light'</span>,</span><br><span class="line"> <span class="string">'difference'</span>, <span class="string">'exclusion'</span>, <span class="string">'hue'</span>, <span class="string">'saturation'</span>, <span class="string">'color'</span>, <span class="string">'luminosity'</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p><img src="/" class="lazyload" data-src="/image/canvas/11.png"  alt="1"></p>
+<p><a href="https://github.com/DerrickTel/study-demo/tree/main/canvas" target="_blank" rel="noopener">源码</a></p>
+<h2 id="基础动画"><a href="#基础动画" class="headerlink" title="基础动画"></a>基础动画</h2><p>我们知道canvas其实就是一个画布，我们在上面作画。等我们看到的时候已经作画完毕。那要怎么制作动画呢？如果需要移动它，我们不得不对所有东西（包括之前的）进行重绘。重绘是相当费时的，而且性能很依赖于电脑的速度。</p>
+<p>我们可以制作很多帧，每一帧都是定格。已快速的速度播放，比如小时候看的定格动画。看的影视剧其实也可以拆分为60个定格图片。打的游戏FPS多少就是拆成多少帧”canvas”</p>
+<p>那这样的话是不是就有思路啦？</p>
+<p>有两种方法可以实现这样的动画操控。首先可以通过 <code>setInterval</code> 和 <code>setTimeout</code> 方法来控制在设定的时间点上执行重绘。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  ctx.arc(x, y, <span class="number">50</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">  ctx.stroke();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(x &gt;= <span class="number">300</span>) &#123;</span><br><span class="line">  	x = <span class="number">70</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  	x += <span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;, <span class="number">1000</span> / <span class="number">60</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/" class="lazyload" data-src="/image/canvas/12.gif"  alt="1"></p>
+<p>好像差点意思，不是我们想要的那个圆圈的活动啊。虽然确实动起来了！是不是我们在画新的圆之前先清除一下？</p>
+<p>代码稍作修改</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> timer = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">          ctx.clearRect(<span class="number">0</span>,<span class="number">0</span>,<span class="number">450</span>,<span class="number">150</span>)</span><br><span class="line">          ctx.translate(x, y)</span><br><span class="line">          ctx.arc(<span class="number">70</span>, <span class="number">80</span>, <span class="number">50</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">          ctx.stroke();</span><br><span class="line">          <span class="keyword">if</span>(x &gt;= <span class="number">300</span>) &#123;</span><br><span class="line">            x = <span class="number">1</span></span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            x += <span class="number">1</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;, <span class="number">1000</span> / <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/" class="lazyload" data-src="/image/canvas/13.gif"  alt="1"></p>
+<p>之前还没发现，怎么中间还有一条线，而且这个间距明明都是 <code>1</code>啊，为什么越来越大，而且这个并没有清除成功啊！</p>
+<ol>
+<li>中间的线应该是因为我们是连续作画，没有<code>closepath</code>导致的拖拽。</li>
+<li>间距应该是因为这个translate每次都在之前的基础继续叠加，变成指数相关了。需要<code>save</code>一下状态</li>
+<li>清除失败应该也是因为没有save清除之后的状态。</li>
+</ol>
+<p>再改一下！！！！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> timer = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">          ctx.save()</span><br><span class="line">          ctx.beginPath();</span><br><span class="line">          ctx.clearRect(<span class="number">0</span>,<span class="number">0</span>,<span class="number">450</span>,<span class="number">150</span>)</span><br><span class="line">          ctx.translate(x, y)</span><br><span class="line">          ctx.arc(<span class="number">70</span>, <span class="number">80</span>, <span class="number">50</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">          ctx.stroke();</span><br><span class="line">          ctx.closePath();</span><br><span class="line">          ctx.restore();</span><br><span class="line">          <span class="keyword">if</span>(x &gt;= <span class="number">300</span>) &#123;</span><br><span class="line">            x = <span class="number">1</span></span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            x += <span class="number">1</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;, <span class="number">1000</span> / <span class="number">60</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/" class="lazyload" data-src="/image/canvas/14.gif"  alt="1"></p>
+<p>ohhhhhhhhhhh！成型！！！</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<li>重绘之前要清空、或者保留状态。</li>
+<li>画好一个东西之后要<code>closePath</code></li>
+</ol>
+<h3 id="强化训练"><a href="#强化训练" class="headerlink" title="强化训练"></a>强化训练</h3><p>做一个时钟~</p>
+<p><img src="/" class="lazyload" data-src="/image/canvas/15.gif"  alt="1"></p>
+<p><a href="https://github.com/DerrickTel/study-demo/blob/main/canvas/bell.html" target="_blank" rel="noopener">我做的源码</a>~</p>
+<p>里面几乎用到了之前学到的所有知识。还是很值得练习的，最好是自己手写一份，我的只能算参考不算标准答案。</p>
+<h2 id="拖影动画"><a href="#拖影动画" class="headerlink" title="拖影动画"></a>拖影动画</h2><p>拖影效果的原理就是将之前的清除函数<code>clearRect</code>换成带透明度的一个蒙版覆盖上去</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ctx.fillStyle = <span class="string">'rgba(255,255,255,0.3)'</span>;</span><br><span class="line">ctx.fillRect(<span class="number">0</span>,<span class="number">0</span>, <span class="number">450</span>, <span class="number">150</span>);</span><br><span class="line"><span class="comment">// ctx.clearRect(0, 0, 450, 150)</span></span><br></pre></td></tr></table></figure>
+
+<p>直接替换一下之前做的时钟。</p>
+<p><img src="/" class="lazyload" data-src="/image/canvas/16.gif"  alt="1"></p>
+<p><a href="https://github.com/DerrickTel/study-demo/blob/main/canvas/bell.html" target="_blank" rel="noopener">源码</a></p>
+<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><h3 id="键盘事件"><a href="#键盘事件" class="headerlink" title="键盘事件"></a>键盘事件</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>onkeydown</td>
+<td>当按下按键时运行脚本</td>
+</tr>
+<tr>
+<td>onkeypress</td>
+<td>当按下并松开按键时运行脚本</td>
+</tr>
+<tr>
+<td>onkeyup</td>
+<td>当松开按键时运行脚本</td>
+</tr>
+</tbody></table>
+<h3 id="鼠标事件"><a href="#鼠标事件" class="headerlink" title="鼠标事件"></a>鼠标事件</h3><p>通过鼠标触发事件, 类似用户的行为</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>onclick</td>
+<td>当单击鼠标时运行脚本</td>
+</tr>
+<tr>
+<td>ondblclick</td>
+<td>当双击鼠标时运行脚本</td>
+</tr>
+<tr>
+<td>ondrag</td>
+<td>当拖动元素时运行脚本</td>
+</tr>
+<tr>
+<td>ondragend</td>
+<td>当拖动操作结束时运行脚本</td>
+</tr>
+<tr>
+<td>ondragenter</td>
+<td>当元素被拖动至有效的拖放目标时运行脚本</td>
+</tr>
+<tr>
+<td>ondragleave</td>
+<td>当元素离开有效拖放目标时运行脚本</td>
+</tr>
+<tr>
+<td>ondragover</td>
+<td>当元素被拖动至有效拖放目标上方时运行脚本</td>
+</tr>
+<tr>
+<td>ondragstart</td>
+<td>当拖动操作开始时运行脚本</td>
+</tr>
+<tr>
+<td>ondrop</td>
+<td>当被拖动元素正在被拖放时运行脚本</td>
+</tr>
+<tr>
+<td>onmousedown</td>
+<td>当按下鼠标按钮时运行脚本</td>
+</tr>
+<tr>
+<td>onmousemove</td>
+<td>当鼠标指针移动时运行脚本</td>
+</tr>
+<tr>
+<td>onmouseout</td>
+<td>当鼠标指针移出元素时运行脚本</td>
+</tr>
+<tr>
+<td>onmouseover</td>
+<td>当鼠标指针移至元素之上时运行脚本</td>
+</tr>
+<tr>
+<td>onmouseup</td>
+<td>当松开鼠标按钮时运行脚本</td>
+</tr>
+<tr>
+<td>onmousewheel</td>
+<td>当转动鼠标滚轮时运行脚本</td>
+</tr>
+<tr>
+<td>onscroll</td>
+<td>当滚动元素的滚动条时运行脚本</td>
+</tr>
+</tbody></table>
+<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">c.addEventListener(<span class="string">'mouseover'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">  timer = setInterval(draw, <span class="number">1000</span> / <span class="number">60</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">c.addEventListener(<span class="string">'mouseout'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">  clearInterval(timer);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="像素操作"><a href="#像素操作" class="headerlink" title="像素操作"></a>像素操作</h2><p>之前学习过对于图像的获取。现在要学习的是对于图像具体细节的获取，某个像素点的色彩。对于图像的操作，比如图像平滑操作以及如何从canvas画布中保存图像。</p>
+<h3 id="ImageData-对象"><a href="#ImageData-对象" class="headerlink" title="ImageData 对象"></a>ImageData 对象</h3><p><code>ImageData</code> 对象中存储着 <code>canvas</code> 对象真实的像素数据</p>
+<p>它提供了以下属性</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ImageData.data</td>
+<td>只读，<code>Uint8ClampedArray</code> 类型的一维数组，包含着 <code>RGBA</code> 格式的整型数据，范围在 <code>0</code> 至 <code>255</code> 之间（ 包括 255 ）顺序的数据，</td>
+</tr>
+<tr>
+<td>ImageData.height</td>
+<td>只读，无符号长整型（unsigned long），图片高度，单位是像素</td>
+</tr>
+<tr>
+<td>ImageData.width</td>
+<td>只读，无符号长整型（unsigned long），图片宽度，单位是像素</td>
+</tr>
+</tbody></table>
+<h3 id="Uint8ClampedArray"><a href="#Uint8ClampedArray" class="headerlink" title="Uint8ClampedArray"></a>Uint8ClampedArray</h3><p><code>Uint8ClampedArray</code> 是一个 <code>高度 × 宽度 × 4 bytes</code> 的一维数组</p>
+<p>这是什么意思呢 ？</p>
+<p>直接上图</p>
+<p><img src="/" class="lazyload" data-src="/image/canvas/17.png"  alt="1"></p>
+<p>可以看到他每四个单位里面就会放好一个点位的<code>RGBA</code>对应的数值。那我们可以做些什么呢？</p>
+<p>很简单！取色器！</p>
+<h3 id="取色器"><a href="#取色器" class="headerlink" title="取色器"></a>取色器</h3><p>结合之前学到的事件，配置鼠标事件，将鼠标当前的颜色输出展示出来。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> div = <span class="built_in">document</span>.getElementById(<span class="string">"div"</span>);</span><br><span class="line"><span class="keyword">const</span> span = <span class="built_in">document</span>.getElementById(<span class="string">"span"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (canvas.getContext) &#123;</span><br><span class="line">  <span class="keyword">const</span> ctx = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">  <span class="keyword">const</span> img = <span class="keyword">new</span> Image()</span><br><span class="line">  img.src = <span class="string">'./img/colorPicker.jpeg'</span></span><br><span class="line">  img.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    ctx.drawImage(img, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    img.style.display = <span class="string">'none'</span>;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">pick</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> x = event.offsetX;</span><br><span class="line">    <span class="keyword">const</span> y = event.offsetY;</span><br><span class="line">    <span class="keyword">const</span> pixel = ctx.getImageData(x, y, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">const</span> data = pixel.data;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> rgba = <span class="string">`rgba(<span class="subst">$&#123;data[<span class="number">0</span>]&#125;</span>, <span class="subst">$&#123;data[<span class="number">1</span>]&#125;</span>, <span class="subst">$&#123;data[<span class="number">2</span>]&#125;</span>, <span class="subst">$&#123;data[<span class="number">3</span>] <span class="regexp">/ 255&#125;)`;</span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="regexp">    div.style.background = rgba;</span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="regexp">    span.textContent = rgba</span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="regexp">  &#125;</span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="regexp"></span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="regexp">  canvas.addEventListener('mousemove', pick)</span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="regexp">&#125;</span></span></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/" class="lazyload" data-src="/image/canvas/18.gif"  alt="1"></p>
+<p>既然可以取到颜色那么，对于颜色的修改就可以直接赋值操作了。比如加滤镜之类的，这个需要上网找特定的颜色修改公式了。不展开啦。</p>
+<h2 id="保存"><a href="#保存" class="headerlink" title="保存"></a>保存</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement" target="_blank" rel="noopener"><code>HTMLCanvasElement</code></a> 提供一个 <code>toDataURL()</code> 方法，此方法在保存图片的时候非常有用。它返回一个包含被类型参数规定的图像表现格式的<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/Data_URLs" target="_blank" rel="noopener">数据链接</a>。返回的图片分辨率是 96 dpi。</p>
+<ul>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toDataURL" target="_blank" rel="noopener"><code>canvas.toDataURL(&#39;image/png&#39;)</code></a></p>
+<p>默认设定。创建一个 PNG 图片。</p>
+</li>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toDataURL" target="_blank" rel="noopener"><code>canvas.toDataURL(&#39;image/jpeg&#39;, quality)</code></a></p>
+<p>创建一个 JPG 图片。你可以有选择地提供从 0 到 1 的品质量，1 表示最好品质，0 基本不被辨析但有比较小的文件大小。</p>
+</li>
+</ul>
+<p>当你从画布中生成了一个数据链接，例如，你可以将它用于任何<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/image" target="_blank" rel="noopener">``</a>元素，或者将它放在一个有 download 属性的超链接里用于保存到本地。</p>
+<p>你也可以从画布中创建一个<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Blob" target="_blank" rel="noopener"><code>Blob</code></a>对像。</p>
+<ul>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toBlob" target="_blank" rel="noopener"><code>canvas.toBlob(callback, type, encoderOptions)</code></a></p>
+<p>这个创建了一个在画布中的代表图片的 <code>Blob</code> 对像。</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas"</span>);</span><br><span class="line"><span class="comment">// 创建一个 a 标签，并设置 href 和 download 属性</span></span><br><span class="line"><span class="keyword">const</span> el = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>);</span><br><span class="line"><span class="comment">// 设置 href 为图片经过 base64 编码后的字符串，默认为 png 格式</span></span><br><span class="line">el.href = canvas.toDataURL();</span><br><span class="line">el.download = <span class="string">'文件名称'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个点击事件并对 a 标签进行触发</span></span><br><span class="line"><span class="keyword">const</span> event = <span class="keyword">new</span> MouseEvent(<span class="string">'click'</span>);</span><br><span class="line">el.dispatchEvent(event);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>至此<code>canvas</code>基本上算是小成了</p>
+<p>有问题欢迎留言交流</p>
+<p><a href="https://github.com/DerrickTel/study-demo/tree/main/canvas" target="_blank" rel="noopener">所有的源码点我</a></p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Derrick</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://derricktel.github.io/2023/03/07/%E6%96%B0%E6%9D%A5%E7%9A%84%E5%90%8C%E4%BA%8B%E9%97%AE%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88canvas%E9%87%8C%E9%9D%A2%E6%98%8E%E6%98%8E%E4%BB%80%E4%B9%88%E9%83%BD%E6%B2%A1%E6%9C%89%EF%BC%8C%E5%8D%B4%E8%BF%99%E4%B9%88%E7%BB%9A%E7%83%82/">http://derricktel.github.io/2023/03/07/%E6%96%B0%E6%9D%A5%E7%9A%84%E5%90%8C%E4%BA%8B%E9%97%AE%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88canvas%E9%87%8C%E9%9D%A2%E6%98%8E%E6%98%8E%E4%BB%80%E4%B9%88%E9%83%BD%E6%B2%A1%E6%9C%89%EF%BC%8C%E5%8D%B4%E8%BF%99%E4%B9%88%E7%BB%9A%E7%83%82/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://derricktel.github.io" target="_blank">Derrick</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/svg/">svg</a></div><div class="post_share"><div class="social-share" data-image="/image/cover/canvas.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="lazyload post-qr-code__img" src="/img/DerrickWechat.png" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="lazyload post-qr-code__img" src="/img/DerrickAlipay.jpg" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="next-post pull-full"><a href="/2023/03/01/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AFSVG(2)-%E7%A5%9E%E4%B9%8B%E5%8F%B3%E6%89%8Bpath/"><img class="next_cover lazyload" data-src="/image/cover/svg.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">重生之我是SVG(2)-神之右手path</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fa fa-fw fa-thumbs-up" aria-hidden="true"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2023/02/27/重生之我是SVG(1)-入门/" title="重生之我是SVG(1)-入门"><img class="relatedPosts_cover lazyload"data-src="/image/cover/svg.png"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2023-02-27</div><div class="relatedPosts_title">重生之我是SVG(1)-入门</div></div></a></div></div><div class="clear_both"></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Derrick</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@latest/lazysizes.min.js" async=""></script></body></html>
